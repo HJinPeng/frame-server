@@ -5,7 +5,8 @@ const router = new Router({
   prefix: '/user'
 });
 
-router.post('/login', userController.login)
+// router.post('/login', userController.login)
+// router.get('/getUserInfo', userController.getUserInfo)
 
 module.exports = router
 
