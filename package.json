@@ -1,0 +1,19 @@
+{
+  "name": "frame-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon ./src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "jinpengh <13143352767@163.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@koa/router": "^11.0.2",
+    "koa": "^2.14.2",
+    "koa-bodyparser": "^4.4.1",
+    "mysql": "^2.18.1",
+    "nodemon": "^3.0.1"
+  }
+}
