@@ -5,13 +5,14 @@ const logger = require('./middleware/logger')
 const unifiedResponse = require('./middleware/unified-response')
 const router = require('./routers')
 const secret = require('./utils/secret-key')
+const getToken = require('./utils/get-token')
 const whiteList = require('./config/white-list')
 
 const app = new Koa()
 
 app
   .use(logger())
-  .use(koaJwt({secret}).unless({path: whiteList}))
+  .use(koaJwt({secret, getToken}).unless({path: whiteList}))
   .use(unifiedResponse())
   .use(bodyParser())
   .use(router.routes())
