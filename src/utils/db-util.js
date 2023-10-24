@@ -1,67 +1,72 @@
-const mysql = require('mysql')
-const dbConfig = require('../config/db')
+const mysql = require("mysql");
+const dbConfig = require("../config/db");
 
-const pool = mysql.createPool(dbConfig)
+const pool = mysql.createPool(dbConfig);
 
-const query = (sql, values) => {
+/**
+ * 通用sql查询方法
+ * @author jinpengh
+ *
+ * @param {String} sql 完整sql语句
+ * @param {Array} values 数据
+ * @returns {*}
+ */
+function query(sql, values) {
   return new Promise((resolve, reject) => {
     pool.getConnection((err, connection) => {
-      if(err) {
-        reject(err)
-      }else {
+      if (err) {
+        reject(err);
+      } else {
         connection.query(sql, values, (error, results, fields) => {
-          if(error) {
-            reject(error)
-          }else {
-            resolve(results)
+          if (error) {
+            reject(error);
+          } else {
+            resolve(results);
           }
-          connection.release()
-        })
+          connection.release();
+        });
       }
-    })
-  })
+    });
+  });
 }
 
-const createTable = (sql) => {
-  return query(sql, [])
+/**
+ * 根据查询条件、排序、取部分数据
+ * @author jinpengh
+ *
+ * @param {String} table 表名
+ * @param {String} fields 字段
+ * @param {Object} condition 条件
+ * @param {String} condition.where 筛选条件
+ * @param {String} condition.orderBy 排序字段
+ * @param {String} condition.order 升序降序 ASC/DESC
+ * @param {Number} condition.offset 起始位置（偏移量）
+ * @param {Number} condition.size 个数
+ * @returns {*}
+ */
+function filterByPage(table, fields, condition) {
+  return query(
+    `SELECT ${fields} FROM ${table} WHERE ${condition.where} ORDER BY ${condition.orderBy} ${condition.order} LIMIT ${condition.offset},${condition.size}`
+  );
 }
 
-const findById = (table, id) => {
-  return query('SELECT * FROM ?? WHERE id = ?', [table, id])
-}
-
-const filterByPage = (table, columns, start, end) => {
-  return query('SELECT ?? FROM ?? LIMIT ? , ?', [columns, table, start, end])
-}
-
-const insertData = (table, values) => {
-  return query('INSERT INTO ?? SET ?', [table, values])
-}
-
-const updateData = (table, values, id) => {
-  return query('UPDATE ?? SET ? WHERE id = ?', [table, values, id])
-}
-
-const deleteById = (table, id) => {
-  return query('DELETE FROM ?? WHERE id = ?', [table, id])
-}
-
-const select = (table, columns) => {
-  return query('SELECT ?? FROM ??', [columns, table])
-}
-
-const count = (table) => {
-  return query('SELECT COUNT(*) AS total FROM ??', [table])
+/**
+ * 根据查询条件统计条数
+ * @author jinpengh
+ *
+ * @param {String} table 表名
+ * @param {String} where 筛选条件
+ * @returns {*}
+ */
+async function count(table, where) {
+  const [result] = await query(
+    `SELECT COUNT(*) AS total FROM ${table} WHERE ${where}`
+  );
+  return result.total;
 }
 
 module.exports = {
   query,
-  createTable,
-  findById,
   filterByPage,
-  insertData,
-  updateData,
-  deleteById,
-  select,
-  count
-}
+  count,
+};
