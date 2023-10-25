@@ -1,25 +1,28 @@
 const jwt = require("jsonwebtoken");
 const secret = require("../utils/secret-key");
+const { INIT_PASSWORD } = require('../config/const')
+const { getBcryptHash, compareBcrypt } = require('../utils/bcrypt')
 const userService = require("../services/user");
 
 const user = {
   // 登录
   async login(ctx) {
     const { account, password } = ctx.request.body;
-    const exist = await userService.existAccount(account);
-    // account不存在
-    if (!exist) {
-      ctx.throw(500, "用户不存在");
-    }
-
     // account存在，判断密码是否正确
-    let result = await userService.login({ account, password });
+    let result = await userService.login(account);
     if (result) {
-      const token = jwt.sign({ userId: result.id }, secret);
-      result.token = `Bearer ${token}`;
-      ctx.body = result;
+      // 比较密码是否一致
+      const isSame = await compareBcrypt(password, result.password);
+      if(isSame) {
+        const token = jwt.sign({ userId: result.id, account: result.account }, secret);
+        result.token = `Bearer ${token}`;
+        delete result.password
+        ctx.body = result;
+      }else {
+        ctx.throw(500, "密码不正确");
+      }
     } else {
-      ctx.throw(500, "密码不正确");
+      ctx.throw(500, "用户不存在");
     }
   },
 
@@ -47,6 +50,30 @@ const user = {
     });
     ctx.body = result;
   },
+
+  // 添加用户
+  async addUser(ctx) {
+    const { account, realname } = ctx.request.body;
+    const { account: createBy } = ctx.state.user;
+    const exist = await userService.existAccount(account);
+    if(exist) {
+      ctx.throw(500, '账号已存在，请重新输入')
+      return;
+    }
+    // hash密码
+    const hashPwd = await getBcryptHash(INIT_PASSWORD)
+    let result = await userService.addUser({account, realname, password: hashPwd, createBy })
+    ctx.body = result;
+  },
+
+
+  // 删除某用户
+  async deleteUserById(ctx) {
+    const id = ctx.params.id;
+    console.log('id', id);
+    let result = await userService.deleteUserById(id)
+    ctx.body = result;
+  }
 };
 
 module.exports = user;

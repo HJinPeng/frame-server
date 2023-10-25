@@ -75,8 +75,107 @@ function standardizePageData({ pageNo, pageSize, records, total }) {
   };
 }
 
+
+/**
+ * 生成sql插入语句的SET部分
+ * @author jinpengh
+ *
+ * @param {Array<String>} fileds 插入字段
+ * @param {Object} info {[field]: value}
+ * @returns {String}
+ */
+function generateInsertData(fileds, info) {
+  const values = [];
+  fileds.forEach(field => {
+    if(info[field] !== undefined) {
+      values.push(`${field} = '${info[field]}'`)
+    }
+  })
+  return values.join(',')
+}
+
+/**
+ * 格式转换：下划线，小驼峰
+ * @author jinpengh
+ *
+ * @param {String} value 
+ * @param {'LowerCamelCase' | 'Underline'} targetFormat 目标格式
+ */
+function transformKeyFormat(value, targetFormat) {
+  if(!value) return value;
+  switch(targetFormat) {
+    case 'LowerCamelCase':
+      return value.replace(/_([a-z])/g, function (match, char) {
+        return char.toUpperCase();
+      })
+    case 'Underline': 
+      return value.replace(/([a-z])([A-Z])/g, '$1_$2').toLowerCase();
+    default:
+      console.error(`第二个参数 targetFormat('LowerCamelCase' | 'Underline') 不能为空`)
+      return value
+  }
+}
+
+
+/**
+ * 将对象的所有key转换为目标格式，如下划线，小驼峰
+ * @author jinpengh
+ *
+ * @param {Object} obj 待修改对象
+ * @param {'LowerCamelCase' | 'Underline'} targetFormat 目标格式
+ * @returns {Object}
+ */
+function transformObjectKeysFormat(obj, targetFormat) {
+  console.log("obj",obj);
+  const result = {};
+  for(let key in obj) {
+    console.log('key', key, obj[key]);
+    result[transformKeyFormat(key, targetFormat)] = obj[key]
+  }
+  return result;
+}
+
+/**
+ * 将数组中的对象的所有key转为目标格式，如下划线，小驼峰
+ * @author jinpengh
+ *
+ * @param {Array} arr 待修改数组
+ * @param {'LowerCamelCase' | 'Underline'} targetFormat 目标格式
+ * @returns {Array}
+ */
+function transformArrayObjectKeysFormat(arr, targetFormat) {
+  return arr.map(item => transformObjectKeysFormat(item, targetFormat))
+}
+
+
+/**
+ * 将 对象数组/对象 的key转为小驼峰
+ * @author jinpengh
+ *
+ * @param {*} data
+ * @returns {*}
+ */
+function underline2LowerCamelCase(data) {
+  return Array.isArray(data) ? transformArrayObjectKeysFormat(data, 'LowerCamelCase') : transformObjectKeysFormat(data, 'LowerCamelCase')
+}
+
+/**
+ * 将 对象数组/对象 的key转为下划线
+ * @author jinpengh
+ *
+ * @param {*} data
+ * @returns {*}
+ */
+function lowerCamelCase2Underline(data) {
+  return Array.isArray(data) ? transformArrayObjectKeysFormat(data, 'Underline') : transformObjectKeysFormat(data, 'Underline')
+}
+
+
 module.exports = {
   stringifySqlField,
   generatePageCondition,
   standardizePageData,
+  generateInsertData,
+  underline2LowerCamelCase,
+  lowerCamelCase2Underline
 };

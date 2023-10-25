@@ -28,7 +28,7 @@ CREATE TABLE `user` (
   `realname` varchar(255) NOT NULL COMMENT '真实名称/昵称',
   `email` varchar(255) DEFAULT NULL COMMENT '邮箱',
   `phone` varchar(50) DEFAULT NULL COMMENT '手机号',
-  `profilePhoto` varchar(255) DEFAULT NULL COMMENT '头像',
+  `profile_photo` varchar(255) DEFAULT NULL COMMENT '头像',
   `sex` int(11) DEFAULT '0' COMMENT '性别(0-默认未知,1-男,2-女)',
   `status` int(11) DEFAULT '1' COMMENT '用户状态(1-正常,2-冻结)',
   `deleted` int(11) DEFAULT '0' COMMENT '逻辑删除(0-正常,1-删除)',
@@ -45,7 +45,12 @@ CREATE TABLE `user` (
 -- Records of user
 -- ----------------------------
 BEGIN;
-INSERT INTO `user` (`id`, `account`, `password`, `realname`, `email`, `phone`, `profilePhoto`, `sex`, `status`, `deleted`, `create_by`, `create_by_name`, `create_date_time`, `update_by`, `update_by_name`, `update_date_time`) VALUES (1, 'admin', '123456', '管理员', NULL, NULL, NULL, 0, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `frame-server`.`user` (account,password,realname,email,phone,profile_photo,sex,status,deleted,create_by,create_by_name,create_date_time,update_by,update_by_name,update_date_time) VALUES
+	 ('admin2','$2b$10$fesr42OGR4gq.hZ9yUIpSOXsJZ.XjiDn2M4nmUQpUQTT0WPRLDlOC','admin2',NULL,NULL,NULL,0,1,0,'admin',NULL,'2023/10/25 06:10:10',NULL,NULL,NULL),
+	 ('admin4','$2b$10$Q.l0WhM40IepxDNqvFnHCuoD82Vs/Lx8MuakNvNT5cx9NvT.9zRJa','管理员4号',NULL,NULL,NULL,0,1,1,'admin2',NULL,'2023/10/25 10:10:10',NULL,NULL,NULL),
+	 ('admin3','$2b$10$9eP2Wp3LwuyG8ABF1Ac28uTJOYxg5THKqQOMjjYp/VrrOR0MCljBW','3号选手',NULL,NULL,NULL,0,1,1,'admin2',NULL,'2023/10/24 10:10:10',NULL,NULL,NULL),
+	 ('admin','$2b$10$sZIqexgups73U9D.lu6JMehUzqg0GQgFGkyPJkLoVSvIxijwAnhPO','系统管理员',NULL,NULL,NULL,0,1,0,'admin2',NULL,'2023/10/25 07:10:10',NULL,NULL,NULL),
+	 ('admin1','$2b$10$n.fnfNEJncAIyGbgYYC1eew36rJQ3tRTpBkoaY92X8TluDltBKVMy','业务管理',NULL,NULL,NULL,0,1,0,'admin',NULL,NULL,NULL,NULL,NULL);
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -6,6 +6,7 @@ const router = new Router({
 });
 
 router.get("/page", userController.getUserPage);
-// router.get('/getUserInfo', userController.getUserInfo)
+router.post('/add', userController.addUser)
+router.delete('/delete/:id', userController.deleteUserById)
 
 module.exports = router;

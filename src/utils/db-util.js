@@ -45,8 +45,10 @@ function query(sql, values) {
  * @returns {*}
  */
 function filterByPage(table, fields, condition) {
+  const { where, orderBy, order, offset, size } = condition;
+  let orderCondition = orderBy ? `${orderBy} ${order}, create_date_time DESC` : 'create_date_time DESC'
   return query(
-    `SELECT ${fields} FROM ${table} WHERE ${condition.where} ORDER BY ${condition.orderBy} ${condition.order} LIMIT ${condition.offset},${condition.size}`
+    `SELECT ${fields} FROM ${table} WHERE deleted != 1 AND ${where ? where : '1 = 1'} ORDER BY ${orderCondition} LIMIT ${offset},${size}`
   );
 }
 
@@ -60,13 +62,57 @@ function filterByPage(table, fields, condition) {
  */
 async function count(table, where) {
   const [result] = await query(
-    `SELECT COUNT(*) AS total FROM ${table} WHERE ${where}`
+    `SELECT COUNT(*) AS total FROM ${table} WHERE deleted != 1 AND ${where ? where : '1 = 1'}`
   );
   return result.total;
+}
+
+
+/**
+ * 插入语句
+ * @author jinpengh
+ *
+ * @async
+ * @param {*} table 表名
+ * @param {*} values 插入数据 key1=value1,key2=value2
+ * @returns {*}
+ */
+async function insert(table, values) {
+  await query(`INSERT INTO ${table} SET ${values}`)
+  return true;
+}
+
+
+/**
+ * 通过id删除某条数据
+ * @author jinpengh
+ *
+ * @async
+ * @param {*} table 表名
+ * @param {*} id 
+ * @returns {*}
+ */
+async function deleteById(table, id) {
+  await query(`DELETE FROM ${table} WHERE id = ${id}`)
+  return true;
+}
+
+/**
+ * 通过id逻辑删除某条数据
+ * @param {*} table 表名
+ * @param {*} id 
+ * @returns 
+ */
+async function logicDeleteById(table, id) {
+  await query(`UPDATE ${table} SET deleted = 1 WHERE id = ${id}`)
+  return true;
 }
 
 module.exports = {
   query,
   filterByPage,
   count,
+  insert,
+  deleteById,
+  logicDeleteById
 };

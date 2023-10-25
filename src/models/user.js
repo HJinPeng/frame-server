@@ -1,5 +1,5 @@
-const { query, filterByPage, count } = require("../utils/db-util");
-const { stringifySqlField } = require("../utils/tool");
+const { query, filterByPage, count, insert, logicDeleteById } = require("../utils/db-util");
+const { stringifySqlField, generateInsertData, underline2LowerCamelCase, lowerCamelCase2Underline } = require("../utils/tool");
 
 const userField = [
   "id",
@@ -7,23 +7,21 @@ const userField = [
   "realname",
   "email",
   "phone",
-  "profilePhoto",
+  "profile_photo",
   "sex",
   "status",
 ];
 
 const user = {
-  // 通过账号密码查找用户是否存在
-  async getOneByAccountAndPassword(model) {
+  // 根据用户账号获取用户信息，包括密码
+  async getUserInfoWithPasswordByAccount(account) {
     const sql = `SELECT ${stringifySqlField(
-      userField,
+      [...userField, 'password'],
       false
-    )} FROM user WHERE account = '${model.account}' AND password = '${
-      model.password
-    }'  LIMIT 1`;
+    )} FROM user WHERE account = '${account}'`;
     let result = await query(sql);
     if (Array.isArray(result) && result.length > 0) {
-      result = result[0];
+      result = underline2LowerCamelCase(result[0]);
     } else {
       result = null;
     }
@@ -38,7 +36,7 @@ const user = {
     )} FROM user WHERE id = ${id}`;
     let result = await query(sql);
     if (Array.isArray(result) && result.length > 0) {
-      result = result[0];
+      result = underline2LowerCamelCase(result[0]);
     } else {
       result = null;
     }
@@ -49,12 +47,7 @@ const user = {
   async existAccount(account) {
     const sql = `SELECT account FROM user where account = '${account}'`;
     let result = await query(sql);
-    if (Array.isArray(result) && result.length > 0) {
-      result = result[0];
-    } else {
-      result = null;
-    }
-    return result;
+    return Array.isArray(result) && result.length > 0
   },
 
   // 查询 start 到 end 范围的符合条件的用户
@@ -67,9 +60,23 @@ const user = {
     );
     return {
       total,
-      records,
+      records: underline2LowerCamelCase(records),
     };
   },
+
+  // 新增用户
+  async insertUser(info) {
+    info = lowerCamelCase2Underline(info);
+    const insertField = ['account', 'password', 'realname', 'email', 'phone', 'profile_photo', 'sex', 'create_by', 'create_date_time', 'update_by', 'update_date_time']
+    let result = await insert('user', generateInsertData(insertField, info));
+    return result
+  },
+  
+  // 删除用户
+  async deleteOneUser(id) {
+    let result = await logicDeleteById('user', id)
+    return result
+  }
 };
 
 module.exports = user;
