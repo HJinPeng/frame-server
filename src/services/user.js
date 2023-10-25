@@ -15,8 +15,8 @@ const user = {
   },
 
   // 判断account是否存在
-  async existAccount(account) {
-    let result = await userModel.existAccount(account);
+  async existAccount(account, exceptId) {
+    let result = await userModel.existAccount(account, exceptId);
     return result;
   },
 
@@ -37,15 +37,20 @@ const user = {
   },
 
   // 新增用户
-  async addUser({account, realname, password, createBy}) {
-    await userModel.insertUser({account, realname, password, createBy });
+  async addUser(data, createInfo) {
+    await userModel.insertUser(data, createInfo);
     return '新增成功'
   },
 
   // 通过id删除用户
-  async deleteUserById(id) {
-    await userModel.deleteOneUser(id);
+  async deleteUserById(id, updateInfo) {
+    await userModel.deleteOneUser(id, updateInfo);
     return '删除成功'
+  },
+
+  async updateUser(data, updateInfo) {
+    await userModel.updateUser(data, updateInfo)
+    return '更新成功'
   }
 };
 

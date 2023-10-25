@@ -1,4 +1,4 @@
-const { query, filterByPage, count, insert, logicDeleteById } = require("../utils/db-util");
+const { query, filterByPage, count, insert, logicDeleteById, updateById} = require("../utils/db-util");
 const { stringifySqlField, generateInsertData, underline2LowerCamelCase, lowerCamelCase2Underline } = require("../utils/tool");
 
 const userField = [
@@ -44,8 +44,8 @@ const user = {
   },
 
   // 判断account是否存在
-  async existAccount(account) {
-    const sql = `SELECT account FROM user where account = '${account}'`;
+  async existAccount(account, exceptId) {
+    const sql = `SELECT account FROM user where account = '${account}' AND deleted != 1 ${exceptId ? 'AND id != ' + exceptId : ''}`;
     let result = await query(sql);
     return Array.isArray(result) && result.length > 0
   },
@@ -65,16 +65,23 @@ const user = {
   },
 
   // 新增用户
-  async insertUser(info) {
-    info = lowerCamelCase2Underline(info);
-    const insertField = ['account', 'password', 'realname', 'email', 'phone', 'profile_photo', 'sex', 'create_by', 'create_date_time', 'update_by', 'update_date_time']
-    let result = await insert('user', generateInsertData(insertField, info));
+  async insertUser(data, createInfo) {
+    data = lowerCamelCase2Underline({...data, ...createInfo});
+    const insertField = ['account', 'password', 'realname', 'email', 'phone', 'profile_photo', 'sex', 'create_by', 'create_by_name', 'create_date_time']
+    let result = await insert('user', generateInsertData(insertField, data));
     return result
   },
   
   // 删除用户
-  async deleteOneUser(id) {
-    let result = await logicDeleteById('user', id)
+  async deleteOneUser(id, updateInfo) {
+    let result = await logicDeleteById('user', id, updateInfo)
+    return result
+  },
+
+  async updateUser(data, updateInfo) {
+    data = lowerCamelCase2Underline({...data, ...updateInfo});
+    const updateField = ['realname', 'email', 'phone', 'profile_photo', 'sex', 'update_by', 'update_by_name', 'update_date_time']
+    let result = await updateById('user', data.id, generateInsertData(updateField, data))
     return result
   }
 };

@@ -14,7 +14,7 @@ const user = {
       // 比较密码是否一致
       const isSame = await compareBcrypt(password, result.password);
       if(isSame) {
-        const token = jwt.sign({ userId: result.id, account: result.account }, secret);
+        const token = jwt.sign({ userId: result.id, account: result.account, realname: result.realname }, secret);
         result.token = `Bearer ${token}`;
         delete result.password
         ctx.body = result;
@@ -54,7 +54,7 @@ const user = {
   // 添加用户
   async addUser(ctx) {
     const { account, realname } = ctx.request.body;
-    const { account: createBy } = ctx.state.user;
+    const createInfo = ctx.state.createInfo;
     const exist = await userService.existAccount(account);
     if(exist) {
       ctx.throw(500, '账号已存在，请重新输入')
@@ -62,7 +62,7 @@ const user = {
     }
     // hash密码
     const hashPwd = await getBcryptHash(INIT_PASSWORD)
-    let result = await userService.addUser({account, realname, password: hashPwd, createBy })
+    let result = await userService.addUser({ account, realname, password: hashPwd }, createInfo)
     ctx.body = result;
   },
 
@@ -70,8 +70,26 @@ const user = {
   // 删除某用户
   async deleteUserById(ctx) {
     const id = ctx.params.id;
-    console.log('id', id);
-    let result = await userService.deleteUserById(id)
+    const updateInfo = ctx.state.updateInfo;
+    let result = await userService.deleteUserById(id, updateInfo)
+    ctx.body = result;
+  },
+
+  // 更新用户信息
+  async updateUser(ctx) {
+    const body = ctx.request.body;
+    const { id, account } = body;
+    if(!id) {
+      ctx.throw(500, '用户id为空')
+      return;
+    }
+    const exist = await userService.existAccount(account, id);
+    if(exist) {
+      ctx.throw(500, '账号已存在，请重新输入')
+      return;
+    }
+    const updateInfo = ctx.state.updateInfo;
+    let result = await userService.updateUser(body, updateInfo)
     ctx.body = result;
   }
 };

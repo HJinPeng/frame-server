@@ -103,8 +103,14 @@ async function deleteById(table, id) {
  * @param {*} id 
  * @returns 
  */
-async function logicDeleteById(table, id) {
-  await query(`UPDATE ${table} SET deleted = 1 WHERE id = ${id}`)
+async function logicDeleteById(table, id, updateInfo) {
+  await query(`UPDATE ${table} SET deleted = 1, update_by = '${updateInfo.updateBy}', update_by_name = '${updateInfo.updateByName}', update_date_time = '${updateInfo.updateDateTime}' WHERE id = ${id}`)
+  return true;
+}
+
+
+async function updateById(table, id, values) {
+  await query(`UPDATE ${table} SET ${values} WHERE id = ${id}`)
   return true;
 }
 
@@ -114,5 +120,6 @@ module.exports = {
   count,
   insert,
   deleteById,
-  logicDeleteById
+  logicDeleteById,
+  updateById
 };

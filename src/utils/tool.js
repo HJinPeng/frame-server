@@ -88,7 +88,11 @@ function generateInsertData(fileds, info) {
   const values = [];
   fileds.forEach(field => {
     if(info[field] !== undefined) {
-      values.push(`${field} = '${info[field]}'`)
+      if(info[field] === null) {
+        values.push(`${field} = NULL`);
+      }else {
+        values.push(`${field} = '${info[field]}'`);
+      }
     }
   })
   return values.join(',')
@@ -126,10 +130,8 @@ function transformKeyFormat(value, targetFormat) {
  * @returns {Object}
  */
 function transformObjectKeysFormat(obj, targetFormat) {
-  console.log("obj",obj);
   const result = {};
   for(let key in obj) {
-    console.log('key', key, obj[key]);
     result[transformKeyFormat(key, targetFormat)] = obj[key]
   }
   return result;
