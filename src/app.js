@@ -12,8 +12,8 @@ const app = new Koa()
 
 app
   .use(logger())
-  .use(koaJwt({secret, getToken}).unless({path: whiteList}))
   .use(unifiedResponse())
+  .use(koaJwt({secret, getToken}).unless({path: whiteList}))
   .use(bodyParser())
   .use(router.routes())
   .use(router.allowedMethods())
