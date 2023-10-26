@@ -10,9 +10,9 @@ function stringifySqlField(fieldArr = [], common = true) {
   if (common) {
     fieldArr = fieldArr.concat([
       "create_by_name",
-      "create_date_time",
+      "DATE_FORMAT(create_date_time, '%Y-%m-%d %H:%i:%s') AS create_date_time",
       "update_by_name",
-      "update_date_time",
+      "DATE_FORMAT(update_date_time, '%Y-%m-%d %H:%i:%s') AS update_date_time"
     ]);
   }
   return fieldArr.join(", ");
