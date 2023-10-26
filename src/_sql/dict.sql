@@ -11,7 +11,7 @@
  Target Server Version : 50743 (5.7.43)
  File Encoding         : 65001
 
- Date: 26/10/2023 00:35:27
+ Date: 27/10/2023 00:41:31
 */
 
 SET NAMES utf8mb4;
@@ -40,7 +40,8 @@ CREATE TABLE `dict` (
 -- Records of dict
 -- ----------------------------
 BEGIN;
-
+INSERT INTO `dict` (`id`, `dict_code`, `dict_name`, `status`, `create_by`, `create_by_name`, `create_date_time`, `update_by`, `update_by_name`, `update_date_time`, `deleted`) VALUES (1, 'user_status', '用户状态', '1', 'admin', '管理员', '2023-10-26 20:53:26', 'admin', '管理员', '2023-10-26 20:53:45', 0);
+INSERT INTO `dict` (`id`, `dict_code`, `dict_name`, `status`, `create_by`, `create_by_name`, `create_date_time`, `update_by`, `update_by_name`, `update_date_time`, `deleted`) VALUES (2, 'role_status', '角色状态', '1', 'admin', '管理员', '2023-10-26 20:54:15', 'admin', '管理员', '2023-10-26 20:54:23', 0);
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
