@@ -4,7 +4,7 @@ const { generatePageCondition, standardizePageData } = require("../utils/tool");
 const dictItem = {
 
   // 根据分页参数获取
-  async page({ dictId, dictItemCode, dictItemName, orderBy, isAsc, pageNo, pageSize }) {
+  async page({ dictId, dictItemCode, dictItemName, status, orderBy, isAsc, pageNo, pageSize }) {
     const condition = generatePageCondition({
       orderBy,
       isAsc,
@@ -14,6 +14,7 @@ const dictItem = {
         { key: "dict_id", value: dictId, operator: '='},
         { key: "dict_item_code", value: dictItemCode, operator: "LIKE" },
         { key: "dict_item_name", value: dictItemName, operator: "LIKE" },
+        { key: "status", value: status, operator: "=" },
       ],
     });
     console.log("condition",condition);

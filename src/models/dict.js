@@ -36,7 +36,7 @@ const dict = {
   // 新增字典
   async insertDict(data, createInfo) {
     data = lowerCamelCase2Underline({...data, ...createInfo});
-    const insertField = ['dict_code', 'dict_name', 'create_by', 'create_by_name', 'create_date_time']
+    const insertField = ['dict_code', 'dict_name', 'status', 'create_by', 'create_by_name', 'create_date_time']
     let result = await insert('dict', generateInsertData(insertField, data));
     return result
   },
@@ -51,7 +51,7 @@ const dict = {
   // 更新字典
   async updateDict(data, updateInfo) {
     data = lowerCamelCase2Underline({...data, ...updateInfo});
-    const updateField = ['dict_code', 'dict_name', 'update_by', 'update_by_name', 'update_date_time']
+    const updateField = ['dict_code', 'dict_name', 'status', 'update_by', 'update_by_name', 'update_date_time']
     let result = await updateById('dict', data.id, generateInsertData(updateField, data))
     return result
   },
@@ -70,7 +70,30 @@ const dict = {
     console.log(sql);
     let result = await query(sql);
     return Array.isArray(result) && result.length > 0
+  },
+
+  // 根据字典编码获取字典条目
+  async getDictByCode(dictCode) {
+    const sql = `SELECT dict.dict_code, dict.dict_name, dict_item.dict_item_code, dict_item.dict_item_name
+    FROM dict
+    INNER JOIN dict_item ON dict.id = dict_item.dict_id
+    WHERE dict.dict_code = '${dictCode}' AND dict.deleted != 1 AND dict.status = '1' AND dict_item.deleted != 1 AND dict_item.status = '1'`
+    let result = await query(sql);
+    result = underline2LowerCamelCase(result)
+    return result;
+  },
+
+  // 根据多个字典编码找到多个字典，并关联字典条目表
+  async getDictsByCodes(dictCodes) {
+    const sql = `SELECT dict.dict_code, dict.dict_name, dict_item.dict_item_code, dict_item.dict_item_name
+    FROM dict
+    INNER JOIN dict_item ON dict.id = dict_item.dict_id
+    WHERE dict.dict_code IN (${dictCodes.map(code => `'${code}'`).join(',')}) AND dict.deleted != 1 AND dict.status = '1' AND dict_item.deleted != 1 AND dict_item.status = '1'`
+    let result = await query(sql);
+    result = underline2LowerCamelCase(result)
+    return result;
   }
+  
 };
 
 module.exports = dict;

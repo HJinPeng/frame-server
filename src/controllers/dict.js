@@ -11,7 +11,8 @@ const dict = {
 
   // 添加字典
   async addDict(ctx) {
-    const { dictCode, dictName } = ctx.request.body;
+    const body = ctx.request.body;
+    const { dictCode, dictName } = body;
     const createInfo = ctx.state.createInfo;
     const existCode = await dictService.existDictCode(dictCode);
     if(existCode) {
@@ -24,7 +25,7 @@ const dict = {
       ctx.throw(500, '字典名称重复，请重新输入')
       return;
     }
-    let result = await dictService.addDict({ dictCode, dictName }, createInfo)
+    let result = await dictService.addDict(body, createInfo)
     ctx.body = result;
   },
 
@@ -59,6 +60,27 @@ const dict = {
     const updateInfo = ctx.state.updateInfo;
     let result = await dictService.updateDict(body, updateInfo)
     ctx.body = result;
+  },
+
+  // 获取单个字典详情
+  async getDict(ctx) {
+    const code = ctx.query.code;
+    const result = await dictService.getDictByCode(code);
+    ctx.body = result
+  },
+
+  // 批量获取字典
+  async getDictBatch(ctx) {
+    // 用逗号拼接
+    const codes = ctx.query.codes;
+    const dictCodes = codes.split(',');
+    const result = await dictService.getDictsByCodes(dictCodes);
+    const dictMap = {};
+    dictCodes.forEach(code => {
+      console.log(code);
+      dictMap[code] = result.filter(row => row.dictCode === code);
+    })
+    ctx.body = dictMap
   }
 };
 

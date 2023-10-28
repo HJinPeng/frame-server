@@ -4,7 +4,7 @@ const { generatePageCondition, standardizePageData } = require("../utils/tool");
 const dict = {
 
   // 根据分页参数获取
-  async page({ dictCode, dictName, orderBy, isAsc, pageNo, pageSize }) {
+  async page({ dictCode, dictName, status, orderBy, isAsc, pageNo, pageSize }) {
     const condition = generatePageCondition({
       orderBy,
       isAsc,
@@ -13,6 +13,7 @@ const dict = {
       filters: [
         { key: "dict_code", value: dictCode, operator: "LIKE" },
         { key: "dict_name", value: dictName, operator: "LIKE" },
+        { key: "status", value: status, operator: "=" },
       ],
     });
     console.log("condition",condition);
@@ -47,6 +48,18 @@ const dict = {
   // 判断字典名称是否存在
   async existDictName(dictName, exceptId) {
     let result = await dictModel.existDictName(dictName, exceptId)
+    return result;
+  },
+
+  // 根据字典编码获取字典条目 
+  async getDictByCode(dictCode) {
+    let result = await dictModel.getDictByCode(dictCode);
+    return result;
+  },
+
+  // 根据dictCode数组找到所有字典
+  async getDictsByCodes(dictCodes) {
+    let result = await dictModel.getDictsByCodes(dictCodes);
     return result;
   }
 };

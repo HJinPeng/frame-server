@@ -29,7 +29,7 @@ const dictItem = {
   // 新增字典条目
   async insertDictItem(data, createInfo) {
     data = lowerCamelCase2Underline({...data, ...createInfo});
-    const insertField = ['dict_id', 'dict_item_code', 'dict_item_name', 'sort', 'create_by', 'create_by_name', 'create_date_time']
+    const insertField = ['dict_id', 'dict_item_code', 'dict_item_name', 'sort', 'status', 'create_by', 'create_by_name', 'create_date_time']
     let result = await insert('dict_item', generateInsertData(insertField, data));
     return result
   },
@@ -43,7 +43,7 @@ const dictItem = {
   // 更新字典条目
   async updateDictItem(data, updateInfo) {
     data = lowerCamelCase2Underline({...data, ...updateInfo});
-    const updateField = ['dict_id', 'dict_item_code', 'dict_item_name', 'sort','update_by', 'update_by_name', 'update_date_time']
+    const updateField = ['dict_id', 'dict_item_code', 'dict_item_name', 'sort', 'status', 'update_by', 'update_by_name', 'update_date_time']
     let result = await updateById('dict_item', data.id, generateInsertData(updateField, data))
     return result
   },
