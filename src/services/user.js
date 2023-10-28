@@ -21,7 +21,7 @@ const user = {
   },
 
   // 根据分页参数获取
-  async page({ account, realname, orderBy, isAsc, pageNo, pageSize }) {
+  async page({ account, realname, status, orderBy, isAsc, pageNo, pageSize }) {
     const condition = generatePageCondition({
       orderBy,
       isAsc,
@@ -30,6 +30,7 @@ const user = {
       filters: [
         { key: "account", value: account, operator: "LIKE" },
         { key: "realname", value: realname, operator: "LIKE" },
+        { key: "status", value: status, operator: "=" },
       ],
     });
     const { records, total } = await userModel.page(condition);

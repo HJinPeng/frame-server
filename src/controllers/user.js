@@ -39,15 +39,8 @@ const user = {
 
   // 获取用户分页列表
   async getUserPage(ctx) {
-    const { account, realname, orderBy, isAsc, pageNo, pageSize } = ctx.query;
-    let result = await userService.page({
-      account,
-      realname,
-      orderBy,
-      isAsc,
-      pageNo,
-      pageSize,
-    });
+    const query = ctx.query;
+    let result = await userService.page(query);
     ctx.body = result;
   },
 

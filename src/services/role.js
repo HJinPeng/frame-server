@@ -4,7 +4,7 @@ const { generatePageCondition, standardizePageData } = require("../utils/tool");
 const role = {
 
   // 根据分页参数获取
-  async page({ roleCode, roleName, orderBy, isAsc, pageNo, pageSize }) {
+  async page({ roleCode, roleName, status, orderBy, isAsc, pageNo, pageSize }) {
     const condition = generatePageCondition({
       orderBy,
       isAsc,
@@ -13,6 +13,7 @@ const role = {
       filters: [
         { key: "role_code", value: roleCode, operator: "LIKE" },
         { key: "role_name", value: roleName, operator: "LIKE" },
+        { key: "status", value: status, operator: "=" },
       ],
     });
     console.log("condition",condition);
