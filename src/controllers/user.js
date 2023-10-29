@@ -1,8 +1,8 @@
-import jwt from 'jsonwebtoken'
-import secret from '../utils/secret-key.js'
 import { INIT_PASSWORD, TOKEN_TIME } from '../config/const.js'
 import { getBcryptHash, compareBcrypt } from '../utils/bcrypt.js'
 import userService from '../services/user.js'
+import { setTokenToRedis } from '../utils/redis-util.js'
+import { generateToken } from '../utils/token.js'
 
 const user = {
   // 登录
@@ -14,12 +14,13 @@ const user = {
       // 比较密码是否一致
       const isSame = await compareBcrypt(password, result.password)
       if (isSame) {
-        const token = jwt.sign(
-          { userId: result.id, account: result.account, realname: result.realname },
-          secret,
-          { expiresIn: TOKEN_TIME }
-        )
-        result.token = `Bearer ${token}`
+        const token = generateToken({
+          userId: result.id,
+          account: result.account,
+          realname: result.realname
+        })
+        result.token = token
+        await setTokenToRedis(token)
         delete result.password
         ctx.body = result
       } else {
