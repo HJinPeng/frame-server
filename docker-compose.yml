@@ -10,3 +10,14 @@ services:
       - "3307:3306"
     volumes:
       - /Users/jinpengh/Desktop/jinpengh/data/frame-server-mysql:/var/lib/mysql
+      
+  redis:
+    container_name: redis
+    image: redis/redis-stack-server:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - /Users/jinpengh/Desktop/jinpengh/data/frame-server-redis/data:/data
+      - /Users/jinpengh/Desktop/jinpengh/data/frame-server-redis/redis.conf:/usr/local/etc/redis/redis.conf
+      - /Users/jinpengh/Desktop/jinpengh/data/frame-server-redis/logs:/logs
+    command: redis-server /usr/local/etc/redis/redis.conf
