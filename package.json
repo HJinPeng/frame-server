@@ -12,7 +12,8 @@
     "start": "nodemon ./src/app.js",
     "serve": "docker-compose up -d",
     "secret": "node ./init/generate-secret.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write src/"
   },
   "author": "jinpengh <13143352767@163.com>",
   "license": "MIT",
@@ -27,5 +28,8 @@
     "koa-jwt": "^4.0.4",
     "mysql": "^2.18.1",
     "nodemon": "^3.0.1"
+  },
+  "devDependencies": {
+    "prettier": "^2.4.1"
   }
 }

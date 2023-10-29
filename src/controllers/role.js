@@ -1,65 +1,63 @@
 import roleService from '../services/role.js'
 
 const role = {
-
   // 获取角色分页列表
   async getRolePage(ctx) {
-    const query = ctx.query;
-    let result = await roleService.page(query);
-    ctx.body = result;
+    const query = ctx.query
+    let result = await roleService.page(query)
+    ctx.body = result
   },
 
   // 添加角色
   async addRole(ctx) {
-    const { roleCode, roleName } = ctx.request.body;
-    const createInfo = ctx.state.createInfo;
-    const existCode = await roleService.existRoleCode(roleCode);
-    if(existCode) {
+    const { roleCode, roleName } = ctx.request.body
+    const createInfo = ctx.state.createInfo
+    const existCode = await roleService.existRoleCode(roleCode)
+    if (existCode) {
       ctx.throw(500, '角色编码重复，请重新输入')
-      return;
+      return
     }
-    const existName = await roleService.existRoleName(roleName);
-    console.log("existName", existName);
-    if(existName) {
+    const existName = await roleService.existRoleName(roleName)
+    console.log('existName', existName)
+    if (existName) {
       ctx.throw(500, '角色名称重复，请重新输入')
-      return;
+      return
     }
     let result = await roleService.addRole({ roleCode, roleName }, createInfo)
-    ctx.body = result;
+    ctx.body = result
   },
-
 
   // 删除某角色
   async deleteRoleById(ctx) {
-    const id = ctx.params.id;
-    const updateInfo = ctx.state.updateInfo;
+    const id = ctx.params.id
+    const updateInfo = ctx.state.updateInfo
     let result = await roleService.deleteRoleById(id, updateInfo)
-    ctx.body = result;
+    ctx.body = result
   },
 
   // 更新角色信息
   async updateRole(ctx) {
-    const body = ctx.request.body;
-    const { id, roleCode, roleName } = body;
-    if(!id) {
+    const body = ctx.request.body
+    const { id, roleCode, roleName } = body
+    if (!id) {
       ctx.throw(500, '角色id为空')
-      return;
+      return
     }
     // 判断更新的角色编码和角色名称是否和其他的重复
-    const existCode = await roleService.existRoleCode(roleCode, id);
-    if(existCode) {
+    const existCode = await roleService.existRoleCode(roleCode, id)
+    if (existCode) {
       ctx.throw(500, '角色编码重复，请重新输入')
-      return;
+      return
     }
-    const existName = await roleService.existRoleName(roleName, id);
-    if(existName) {
+    const existName = await roleService.existRoleName(roleName, id)
+    if (existName) {
       ctx.throw(500, '角色名称重复，请重新输入')
-      return;
+      return
     }
-    const updateInfo = ctx.state.updateInfo;
+    const updateInfo = ctx.state.updateInfo
     let result = await roleService.updateRole(body, updateInfo)
-    ctx.body = result;
+    ctx.body = result
   }
-};
+}
 
-export default role;
+export default role

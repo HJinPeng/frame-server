@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 
 export default function () {
-  return async function ( ctx, next ) {
+  return async function (ctx, next) {
     ctx.state.updateInfo = {
       updateBy: ctx.state.user?.account,
       updateByName: ctx.state.user?.realname,

@@ -1,7 +1,7 @@
 import mysql from 'mysql'
-import dbConfig from '../config/db.js';
+import dbConfig from '../config/db.js'
 
-const pool = mysql.createPool(dbConfig);
+const pool = mysql.createPool(dbConfig)
 
 /**
  * 通用sql查询方法
@@ -15,19 +15,19 @@ export function query(sql, values) {
   return new Promise((resolve, reject) => {
     pool.getConnection((err, connection) => {
       if (err) {
-        reject(err);
+        reject(err)
       } else {
         connection.query(sql, values, (error, results, fields) => {
           if (error) {
-            reject(error);
+            reject(error)
           } else {
-            resolve(results);
+            resolve(results)
           }
-          connection.release();
-        });
+          connection.release()
+        })
       }
-    });
-  });
+    })
+  })
 }
 
 /**
@@ -45,11 +45,15 @@ export function query(sql, values) {
  * @returns {*}
  */
 export function filterByPage(table, fields, condition) {
-  const { where, orderBy, order, offset, size } = condition;
-  let orderCondition = orderBy ? `${orderBy} ${order}, create_date_time DESC` : 'create_date_time DESC'
+  const { where, orderBy, order, offset, size } = condition
+  let orderCondition = orderBy
+    ? `${orderBy} ${order}, create_date_time DESC`
+    : 'create_date_time DESC'
   return query(
-    `SELECT ${fields} FROM ${table} WHERE deleted != 1 AND ${where ? where : '1 = 1'} ORDER BY ${orderCondition} LIMIT ${offset},${size}`
-  );
+    `SELECT ${fields} FROM ${table} WHERE deleted != 1 AND ${
+      where ? where : '1 = 1'
+    } ORDER BY ${orderCondition} LIMIT ${offset},${size}`
+  )
 }
 
 /**
@@ -63,10 +67,9 @@ export function filterByPage(table, fields, condition) {
 export async function count(table, where) {
   const [result] = await query(
     `SELECT COUNT(*) AS total FROM ${table} WHERE deleted != 1 AND ${where ? where : '1 = 1'}`
-  );
-  return result.total;
+  )
+  return result.total
 }
-
 
 /**
  * 插入语句
@@ -79,9 +82,8 @@ export async function count(table, where) {
  */
 export async function insert(table, values) {
   await query(`INSERT INTO ${table} SET ${values}`)
-  return true;
+  return true
 }
-
 
 /**
  * 通过id删除某条数据
@@ -89,27 +91,28 @@ export async function insert(table, values) {
  *
  * @async
  * @param {*} table 表名
- * @param {*} id 
+ * @param {*} id
  * @returns {*}
  */
 export async function deleteById(table, id) {
   await query(`DELETE FROM ${table} WHERE id = ${id}`)
-  return true;
+  return true
 }
 
 /**
  * 通过id逻辑删除某条数据
  * @param {*} table 表名
- * @param {*} id 
- * @returns 
+ * @param {*} id
+ * @returns
  */
 export async function logicDeleteById(table, id, updateInfo) {
-  await query(`UPDATE ${table} SET deleted = 1, update_by = '${updateInfo.updateBy}', update_by_name = '${updateInfo.updateByName}', update_date_time = '${updateInfo.updateDateTime}' WHERE id = ${id}`)
-  return true;
+  await query(
+    `UPDATE ${table} SET deleted = 1, update_by = '${updateInfo.updateBy}', update_by_name = '${updateInfo.updateByName}', update_date_time = '${updateInfo.updateDateTime}' WHERE id = ${id}`
+  )
+  return true
 }
-
 
 export async function updateById(table, id, values) {
   await query(`UPDATE ${table} SET ${values} WHERE id = ${id}`)
-  return true;
+  return true
 }

@@ -14,12 +14,11 @@ const app = new Koa()
 app
   .use(logger())
   .use(unifiedResponse())
-  .use(koaJwt({secret, getToken}).unless({path: whiteList}))
+  .use(koaJwt({ secret, getToken }).unless({ path: whiteList }))
   .use(operationInfo())
   .use(bodyParser())
   .use(router.routes())
   .use(router.allowedMethods())
 
-
 app.listen(3000)
-console.log('http://127.0.0.1:3000');
+console.log('http://127.0.0.1:3000')

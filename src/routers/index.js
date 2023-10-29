@@ -5,7 +5,7 @@ import roleRouter from './role.js'
 import dictRouter from './dict.js'
 import dictItemRouter from './dict-item.js'
 
-const router = new Router();
+const router = new Router()
 
 router
   .use(authRouter.routes(), authRouter.allowedMethods())

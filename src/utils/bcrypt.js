@@ -1,7 +1,6 @@
 import bcrypt from 'bcrypt'
 
-const saltRounds = 10;
-
+const saltRounds = 10
 
 /**
  * 将传入文本生成hash
@@ -16,7 +15,6 @@ export async function getBcryptHash(text) {
   return hash
 }
 
-
 /**
  * 将原始文本和hash文本比对
  * @author jinpengh
@@ -27,6 +25,6 @@ export async function getBcryptHash(text) {
  * @returns {Boolean}
  */
 export async function compareBcrypt(text, hash) {
-  const same = await bcrypt.compare(text, hash) 
+  const same = await bcrypt.compare(text, hash)
   return same
 }
