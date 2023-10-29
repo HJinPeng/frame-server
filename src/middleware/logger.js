@@ -1,4 +1,4 @@
-module.exports = function () {
+export default function () {
   return async function ( ctx, next ) {
     const start = Date.now();
     await next()

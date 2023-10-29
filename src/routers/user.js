@@ -1,5 +1,5 @@
-const Router = require("@koa/router");
-const userController = require("../controllers/user");
+import Router from "@koa/router";
+import userController from "../controllers/user.js";
 
 const router = new Router({
   prefix: "/user",
@@ -10,4 +10,4 @@ router.post('/add', userController.addUser)
 router.delete('/delete/:id', userController.deleteUserById)
 router.put('/edit', userController.updateUser)
 
-module.exports = router;
+export default router;

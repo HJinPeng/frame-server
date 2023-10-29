@@ -2,7 +2,11 @@
   "name": "frame-server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "type": "module",
+  "module": "./src/app.js",
+  "engines": {
+    "node": ">=16"
+  },
   "scripts": {
     "dev": "npm run start",
     "start": "nodemon ./src/app.js",

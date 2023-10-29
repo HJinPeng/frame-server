@@ -1,5 +1,5 @@
-const roleModel = require("../models/role");
-const { generatePageCondition, standardizePageData } = require("../utils/tool");
+import roleModel from "../models/role.js";
+import { generatePageCondition, standardizePageData } from "../utils/tool.js";
 
 const role = {
 
@@ -52,4 +52,4 @@ const role = {
   }
 };
 
-module.exports = role;
+export default role;

@@ -1,13 +1,13 @@
-const Koa = require('koa')
-const bodyParser = require('koa-bodyparser')
-const koaJwt = require('koa-jwt')
-const logger = require('./middleware/logger')
-const unifiedResponse = require('./middleware/unified-response')
-const operationInfo = require('./middleware/operation-info')
-const router = require('./routers')
-const secret = require('./utils/secret-key')
-const getToken = require('./utils/get-token')
-const whiteList = require('./config/white-list')
+import Koa from 'koa'
+import bodyParser from 'koa-bodyparser'
+import koaJwt from 'koa-jwt'
+import logger from './middleware/logger.js'
+import unifiedResponse from './middleware/unified-response.js'
+import operationInfo from './middleware/operation-info.js'
+import router from './routers/index.js'
+import secret from './utils/secret-key.js'
+import getToken from './utils/get-token.js'
+import whiteList from './config/white-list.js'
 
 const app = new Koa()
 

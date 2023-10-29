@@ -1,6 +1,6 @@
 // 通过 ctx.msg 设置成功响应的 message
 
-module.exports = function () {
+export default function () {
   return async function (ctx, next) {
     try {
       await next()

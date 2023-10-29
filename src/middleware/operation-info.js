@@ -1,6 +1,6 @@
-const dayjs = require('dayjs')
+import dayjs from 'dayjs'
 
-module.exports = function () {
+export default function () {
   return async function ( ctx, next ) {
     ctx.state.updateInfo = {
       updateBy: ctx.state.user?.account,

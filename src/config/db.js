@@ -7,4 +7,4 @@ const dbConfig = {
   connectionLimit: 10
 }
 
-module.exports = dbConfig
+export default dbConfig

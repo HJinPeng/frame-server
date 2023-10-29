@@ -1,4 +1,4 @@
-module.exports = function getToken (ctx, opts) {
+export default function getToken (ctx, opts) {
   if (!ctx.header || !ctx.header['x-access-token']) {
     return;
   }

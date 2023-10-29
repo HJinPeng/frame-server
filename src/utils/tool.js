@@ -6,7 +6,7 @@
  * @param {boolean} [common=true] false则添加不添加通用字段
  * @returns {String}
  */
-function stringifySqlField(fieldArr = [], common = true) {
+export function stringifySqlField(fieldArr = [], common = true) {
   if (common) {
     fieldArr = fieldArr.concat([
       "create_by_name",
@@ -30,7 +30,7 @@ function stringifySqlField(fieldArr = [], common = true) {
  * @param {Array<{key: String; value: String; operator: '=' | 'LIKE'}>} param0.filters
  * @returns {{ orderBy: String; order: String; offset: Number; size: Number; where: String; }}
  */
-function generatePageCondition({ orderBy, isAsc, pageNo, pageSize, filters }) {
+export function generatePageCondition({ orderBy, isAsc, pageNo, pageSize, filters }) {
   pageNo = parseInt(pageNo || 1);
   pageSize = parseInt(pageSize || 10);
   const where = [];
@@ -63,7 +63,7 @@ function generatePageCondition({ orderBy, isAsc, pageNo, pageSize, filters }) {
  * @param {*} param0.total
  * @returns {{ current: any; size: any; pages: any; records: any; total: any; }}
  */
-function standardizePageData({ pageNo, pageSize, records, total }) {
+export function standardizePageData({ pageNo, pageSize, records, total }) {
   pageNo = parseInt(pageNo || 1);
   pageSize = parseInt(pageSize || 10);
   return {
@@ -84,7 +84,7 @@ function standardizePageData({ pageNo, pageSize, records, total }) {
  * @param {Object} info {[field]: value}
  * @returns {String}
  */
-function generateInsertData(fileds, info) {
+export function generateInsertData(fileds, info) {
   const values = [];
   fileds.forEach(field => {
     if(info[field] !== undefined) {
@@ -157,7 +157,7 @@ function transformArrayObjectKeysFormat(arr, targetFormat) {
  * @param {*} data
  * @returns {*}
  */
-function underline2LowerCamelCase(data) {
+export function underline2LowerCamelCase(data) {
   return Array.isArray(data) ? transformArrayObjectKeysFormat(data, 'LowerCamelCase') : transformObjectKeysFormat(data, 'LowerCamelCase')
 }
 
@@ -168,16 +168,6 @@ function underline2LowerCamelCase(data) {
  * @param {*} data
  * @returns {*}
  */
-function lowerCamelCase2Underline(data) {
+export function lowerCamelCase2Underline(data) {
   return Array.isArray(data) ? transformArrayObjectKeysFormat(data, 'Underline') : transformObjectKeysFormat(data, 'Underline')
 }
-
-
-module.exports = {
-  stringifySqlField,
-  generatePageCondition,
-  standardizePageData,
-  generateInsertData,
-  underline2LowerCamelCase,
-  lowerCamelCase2Underline
-};

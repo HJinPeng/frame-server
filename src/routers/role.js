@@ -1,5 +1,5 @@
-const Router = require("@koa/router");
-const roleController = require("../controllers/role");
+import Router from "@koa/router";
+import roleController from "../controllers/role.js";
 
 const router = new Router({
   prefix: "/role",
@@ -10,4 +10,4 @@ router.post('/add', roleController.addRole)
 router.delete('/delete/:id', roleController.deleteRoleById)
 router.put('/edit', roleController.updateRole)
 
-module.exports = router;
+export default router;

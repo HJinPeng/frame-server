@@ -1,4 +1,4 @@
-const roleService = require("../services/role");
+import roleService from '../services/role.js'
 
 const role = {
 
@@ -62,4 +62,4 @@ const role = {
   }
 };
 
-module.exports = role;
+export default role;

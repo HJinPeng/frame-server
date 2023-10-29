@@ -1,1 +1,3 @@
-module.exports = ['/login']
+const whiteList = ['/login']
+
+export default whiteList

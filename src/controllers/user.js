@@ -1,8 +1,8 @@
-const jwt = require("jsonwebtoken");
-const secret = require("../utils/secret-key");
-const { INIT_PASSWORD, TOKEN_TIME } = require('../config/const')
-const { getBcryptHash, compareBcrypt } = require('../utils/bcrypt')
-const userService = require("../services/user");
+import jwt from "jsonwebtoken";
+import secret from "../utils/secret-key.js";
+import { INIT_PASSWORD, TOKEN_TIME } from '../config/const.js'
+import { getBcryptHash, compareBcrypt } from '../utils/bcrypt.js'
+import userService from '../services/user.js'
 
 const user = {
   // 登录
@@ -87,4 +87,4 @@ const user = {
   }
 };
 
-module.exports = user;
+export default user;

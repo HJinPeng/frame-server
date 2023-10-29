@@ -1,5 +1,5 @@
-const { query, filterByPage, count, insert, logicDeleteById, updateById} = require("../utils/db-util");
-const { stringifySqlField, generateInsertData, underline2LowerCamelCase, lowerCamelCase2Underline } = require("../utils/tool");
+import { query, filterByPage, count, insert, logicDeleteById, updateById} from "../utils/db-util.js"
+import { stringifySqlField, generateInsertData, underline2LowerCamelCase, lowerCamelCase2Underline } from "../utils/tool.js";
 
 const userField = [
   "id",
@@ -86,4 +86,4 @@ const user = {
   }
 };
 
-module.exports = user;
+export default user;

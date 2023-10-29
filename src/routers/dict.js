@@ -1,5 +1,5 @@
-const Router = require("@koa/router");
-const dictController = require("../controllers/dict");
+import Router from "@koa/router";
+import dictController from "../controllers/dict.js";
 
 const router = new Router({
   prefix: "/dict",
@@ -12,4 +12,4 @@ router.put('/edit', dictController.updateDict)
 router.get('/get', dictController.getDict)
 router.get('/batch', dictController.getDictBatch)
 
-module.exports = router;
+export default router;

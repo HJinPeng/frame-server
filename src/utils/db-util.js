@@ -1,5 +1,5 @@
-const mysql = require("mysql");
-const dbConfig = require("../config/db");
+import mysql from 'mysql'
+import dbConfig from '../config/db.js';
 
 const pool = mysql.createPool(dbConfig);
 
@@ -11,7 +11,7 @@ const pool = mysql.createPool(dbConfig);
  * @param {Array} values 数据
  * @returns {*}
  */
-function query(sql, values) {
+export function query(sql, values) {
   return new Promise((resolve, reject) => {
     pool.getConnection((err, connection) => {
       if (err) {
@@ -44,7 +44,7 @@ function query(sql, values) {
  * @param {Number} condition.size 个数
  * @returns {*}
  */
-function filterByPage(table, fields, condition) {
+export function filterByPage(table, fields, condition) {
   const { where, orderBy, order, offset, size } = condition;
   let orderCondition = orderBy ? `${orderBy} ${order}, create_date_time DESC` : 'create_date_time DESC'
   return query(
@@ -60,7 +60,7 @@ function filterByPage(table, fields, condition) {
  * @param {String} where 筛选条件
  * @returns {*}
  */
-async function count(table, where) {
+export async function count(table, where) {
   const [result] = await query(
     `SELECT COUNT(*) AS total FROM ${table} WHERE deleted != 1 AND ${where ? where : '1 = 1'}`
   );
@@ -77,7 +77,7 @@ async function count(table, where) {
  * @param {*} values 插入数据 key1=value1,key2=value2
  * @returns {*}
  */
-async function insert(table, values) {
+export async function insert(table, values) {
   await query(`INSERT INTO ${table} SET ${values}`)
   return true;
 }
@@ -92,7 +92,7 @@ async function insert(table, values) {
  * @param {*} id 
  * @returns {*}
  */
-async function deleteById(table, id) {
+export async function deleteById(table, id) {
   await query(`DELETE FROM ${table} WHERE id = ${id}`)
   return true;
 }
@@ -103,23 +103,13 @@ async function deleteById(table, id) {
  * @param {*} id 
  * @returns 
  */
-async function logicDeleteById(table, id, updateInfo) {
+export async function logicDeleteById(table, id, updateInfo) {
   await query(`UPDATE ${table} SET deleted = 1, update_by = '${updateInfo.updateBy}', update_by_name = '${updateInfo.updateByName}', update_date_time = '${updateInfo.updateDateTime}' WHERE id = ${id}`)
   return true;
 }
 
 
-async function updateById(table, id, values) {
+export async function updateById(table, id, values) {
   await query(`UPDATE ${table} SET ${values} WHERE id = ${id}`)
   return true;
 }
-
-module.exports = {
-  query,
-  filterByPage,
-  count,
-  insert,
-  deleteById,
-  logicDeleteById,
-  updateById
-};

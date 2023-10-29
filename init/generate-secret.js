@@ -1,6 +1,6 @@
-const crypto = require('crypto');
-const fs = require('fs')
-const path = require('path')
+import crypto from 'crypto';
+import fs from 'node:fs';
+import path from 'path'
 
 // 生成一个安全的随机密钥
 const generateSymmetricKey = () => {

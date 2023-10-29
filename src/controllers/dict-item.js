@@ -1,4 +1,4 @@
-const dictItemService = require("../services/dict-item");
+import dictItemService from '../services/dict-item.js'
 
 const dictItem = {
 
@@ -63,4 +63,4 @@ const dictItem = {
   }
 };
 
-module.exports = dictItem;
+export default dictItem;

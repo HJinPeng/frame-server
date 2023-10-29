@@ -1,9 +1,9 @@
-const Router = require('@koa/router')
-const authRouter = require('./auth')
-const userRouter = require('./user')
-const roleRouter = require('./role')
-const dictRouter = require('./dict')
-const dictItemRouter = require('./dict-item')
+import Router from '@koa/router'
+import authRouter from './auth.js'
+import userRouter from './user.js'
+import roleRouter from './role.js'
+import dictRouter from './dict.js'
+import dictItemRouter from './dict-item.js'
 
 const router = new Router();
 
@@ -14,4 +14,4 @@ router
   .use(dictRouter.routes(), dictRouter.allowedMethods())
   .use(dictItemRouter.routes(), dictItemRouter.allowedMethods())
 
-module.exports = router
+export default router

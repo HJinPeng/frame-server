@@ -1,5 +1,5 @@
-const dictItemModel = require("../models/dict-item");
-const { generatePageCondition, standardizePageData } = require("../utils/tool");
+import dictItemModel from "../models/dict-item.js";
+import { generatePageCondition, standardizePageData } from "../utils/tool.js";
 
 const dictItem = {
 
@@ -53,4 +53,4 @@ const dictItem = {
   }
 };
 
-module.exports = dictItem;
+export default dictItem;

@@ -1,5 +1,5 @@
-const userModel = require("../models/user");
-const { generatePageCondition, standardizePageData } = require("../utils/tool");
+import userModel from "../models/user.js";
+import { generatePageCondition, standardizePageData } from "../utils/tool.js";
 
 const user = {
   // 登录
@@ -55,4 +55,4 @@ const user = {
   }
 };
 
-module.exports = user;
+export default user;

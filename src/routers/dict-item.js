@@ -1,5 +1,5 @@
-const Router = require("@koa/router");
-const dictItemController = require("../controllers/dict-item");
+import Router from "@koa/router";
+import dictItemController from "../controllers/dict-item.js";
 
 const router = new Router({
   prefix: "/dict-item",
@@ -10,4 +10,4 @@ router.post('/add', dictItemController.addDictItem)
 router.delete('/delete/:id', dictItemController.deleteDictItemById)
 router.put('/edit', dictItemController.updateDictItem)
 
-module.exports = router;
+export default router;
