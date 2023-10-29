@@ -14,8 +14,6 @@ import {
 } from '../utils/tool.js'
 const dictField = ['id', 'dict_code', 'dict_name', 'status']
 
-const dictItemField = ['id', 'dict_id', 'dict_item_code', 'dict_item_name', 'sort', 'status']
-
 const dict = {
   // 查询 start 到 end 范围的符合条件的字典
   async page(condition) {
