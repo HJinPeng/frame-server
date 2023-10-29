@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const secret = require("../utils/secret-key");
-const { INIT_PASSWORD } = require('../config/const')
+const { INIT_PASSWORD, TOKEN_TIME } = require('../config/const')
 const { getBcryptHash, compareBcrypt } = require('../utils/bcrypt')
 const userService = require("../services/user");
 
@@ -14,7 +14,7 @@ const user = {
       // 比较密码是否一致
       const isSame = await compareBcrypt(password, result.password);
       if(isSame) {
-        const token = jwt.sign({ userId: result.id, account: result.account, realname: result.realname }, secret);
+        const token = jwt.sign({ userId: result.id, account: result.account, realname: result.realname }, secret, {expiresIn: TOKEN_TIME});
         result.token = `Bearer ${token}`;
         delete result.password
         ctx.body = result;

@@ -12,9 +12,13 @@ module.exports = function () {
         timestamp: Date.now()
       }
     } catch (error) {
+      let message = error.message || 'Internal Server Error';
+      if(error.status === 401) {
+        message = '超时请重新登录'
+      }
       ctx.body = {
         code: error.status,
-        message: error.message || 'Internal Server Error',
+        message,
         success: false,
         result: null,
         timestamp: Date.now()
