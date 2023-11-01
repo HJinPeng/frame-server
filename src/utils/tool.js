@@ -88,7 +88,7 @@ export function generateInsertData(fileds, info) {
   fileds.forEach((field) => {
     if (info[field] !== undefined) {
       if (info[field] === null) {
-        values.push(`${field} = NULL`)
+        values.push(`${field} IS NULL`)
       } else {
         values.push(`${field} = '${info[field]}'`)
       }
