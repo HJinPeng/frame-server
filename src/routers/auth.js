@@ -5,5 +5,6 @@ const router = new Router()
 
 router.post('/login', userController.login)
 router.get('/getUserInfo', userController.getUserInfo)
+router.get('/queryUserMenuPermission', userController.getUserMenus)
 
 export default router

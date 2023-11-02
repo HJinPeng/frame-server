@@ -2,6 +2,7 @@ import { INIT_PASSWORD, TOKEN_TIME } from '../config/const.js'
 import { getBcryptHash, compareBcrypt } from '../utils/bcrypt.js'
 import userService from '../services/user.js'
 import userRoleService from '../services/user-role.js'
+import roleMenuService from '../services/role-menu.js'
 import { setTokenToRedis } from '../utils/redis-util.js'
 import { generateToken } from '../utils/token.js'
 
@@ -19,7 +20,8 @@ const user = {
         const token = generateToken({
           userId: result.id,
           account: result.account,
-          realname: result.realname
+          realname: result.realname,
+          roles
         })
         result.token = token
         result.roles = roles
@@ -79,6 +81,7 @@ const user = {
     const id = ctx.params.id
     const updateInfo = ctx.state.updateInfo
     let result = await userService.deleteUserById(id, updateInfo)
+    // TODO: 删除用户-角色表
     ctx.body = result
   },
 
@@ -114,6 +117,14 @@ const user = {
     ctx.body = {
       ...userInfo,
       roles: roles.map((role) => role.roleId)
+    }
+  },
+
+  async getUserMenus(ctx) {
+    const { roles } = ctx.state.user
+    let menus = await roleMenuService.getMenusInfoByRoleIds(roles.map((role) => role.id))
+    ctx.body = {
+      menus
     }
   }
 }

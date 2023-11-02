@@ -1,4 +1,5 @@
 import roleService from '../services/role.js'
+import roleMenuService from '../services/role-menu.js'
 
 const role = {
   // 获取角色分页列表
@@ -38,6 +39,8 @@ const role = {
     const id = ctx.params.id
     const updateInfo = ctx.state.updateInfo
     let result = await roleService.deleteRoleById(id, updateInfo)
+    // TODO: 删除用户-角色表对应的角色id
+    // TODO: 删除角色-菜单表对应的角色id
     ctx.body = result
   },
 
@@ -62,6 +65,21 @@ const role = {
     }
     const updateInfo = ctx.state.updateInfo
     let result = await roleService.updateRole(body, updateInfo)
+    ctx.body = result
+  },
+
+  async updateRoleMenus(ctx) {
+    const body = ctx.request.body
+    const { roleId, menus } = body
+    const createInfo = ctx.state.createInfo
+    let result = await roleMenuService.update(roleId, menus, createInfo)
+    ctx.body = '更新成功'
+  },
+
+  async getRoleMenus(ctx) {
+    const roleId = ctx.params.id
+    let result = await roleMenuService.getMenusByRoleId(roleId)
+    result = result.map((item) => item.menuId)
     ctx.body = result
   }
 }
