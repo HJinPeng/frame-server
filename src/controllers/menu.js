@@ -29,7 +29,7 @@ const menu = {
       ctx.throw(500, '菜单id为空')
       return
     }
-    const exist = await menuService.existSameMenu(permissionName, parentId)
+    const exist = await menuService.existSameMenu(permissionName, parentId, id)
     if (exist) {
       ctx.throw(500, '同一级菜单中不能有相同的名称')
       return
@@ -37,6 +37,20 @@ const menu = {
     const updateInfo = ctx.state.updateInfo
     let result = await menuService.updateMenu(body, updateInfo)
     ctx.body = result
+  },
+
+  async deleteMenuById(ctx) {
+    const id = ctx.params.id
+    const updateInfo = ctx.state.updateInfo
+    // 判断是否是叶子节点
+    const isLeaf = await menuService.isLeafMenu(id)
+    if (isLeaf) {
+      let result = await menuService.deleteMenuById(id, updateInfo)
+      ctx.body = result
+    } else {
+      ctx.throw(500, '该节点下还有其他叶子节点，不能删除')
+      return
+    }
   }
 }
 

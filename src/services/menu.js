@@ -55,14 +55,24 @@ const menu = {
     return result
   },
 
-  async existSameMenu(permissionName, parentId) {
-    let result = await menuModel.existSameMenu(permissionName, parentId)
+  async existSameMenu(permissionName, parentId, id) {
+    let result = await menuModel.existSameMenu(permissionName, parentId, id)
     return result
   },
 
   async updateMenu(data, updateInfo) {
     await menuModel.updateMenu(data, updateInfo)
     return '更新成功'
+  },
+
+  async deleteMenuById(id, updateInfo) {
+    await menuModel.deleteMenu(id, updateInfo)
+    return '删除成功'
+  },
+
+  async isLeafMenu(id) {
+    let result = await menuModel.isLeafMenu(id)
+    return result
   }
 }
 

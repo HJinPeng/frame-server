@@ -8,5 +8,6 @@ const router = new Router({
 router.post('/add', menuController.addMenu)
 router.get('/all-menu', menuController.getAllMenu)
 router.put('/edit', menuController.updateMenu)
+router.delete('/delete/:id', menuController.deleteMenuById)
 
 export default router

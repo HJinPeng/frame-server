@@ -7,7 +7,7 @@ export default function () {
   const middleware = async function (ctx, next) {
     // 没有token，401
     if (!ctx.header || !ctx.header['x-access-token']) {
-      ctx.throw(401)
+      ctx.throw(403, '没权限访问')
       return
     }
 
