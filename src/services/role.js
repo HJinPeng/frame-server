@@ -20,6 +20,11 @@ const role = {
     return standardizePageData({ pageNo, pageSize, records, total })
   },
 
+  async all() {
+    let result = await roleModel.all()
+    return result
+  },
+
   // 新增角色
   async addRole(data, createInfo) {
     await roleModel.insertRole(data, createInfo)

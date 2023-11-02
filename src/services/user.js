@@ -16,8 +16,8 @@ const user = {
 
   // 判断account是否存在
   async existAccount(account, exceptId) {
-    let result = await userModel.existAccount(account, exceptId)
-    return result
+    let result = await userModel.searchAccount(account, exceptId)
+    return Array.isArray(result) && result.length > 0
   },
 
   // 根据分页参数获取
@@ -40,7 +40,8 @@ const user = {
   // 新增用户
   async addUser(data, createInfo) {
     await userModel.insertUser(data, createInfo)
-    return '新增成功'
+    let result = await userModel.searchAccount(data.account)
+    return result[0].id
   },
 
   // 通过id删除用户
@@ -51,6 +52,7 @@ const user = {
 
   async updateUser(data, updateInfo) {
     await userModel.updateUser(data, updateInfo)
+    console.log('???')
     return '更新成功'
   }
 }

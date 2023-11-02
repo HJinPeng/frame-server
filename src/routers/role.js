@@ -6,6 +6,7 @@ const router = new Router({
 })
 
 router.get('/page', roleController.getRolePage)
+router.get('/all', roleController.all)
 router.post('/add', roleController.addRole)
 router.delete('/delete/:id', roleController.deleteRoleById)
 router.put('/edit', roleController.updateRole)

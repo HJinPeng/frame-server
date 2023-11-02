@@ -8,6 +8,12 @@ const role = {
     ctx.body = result
   },
 
+  // 所有角色
+  async all(ctx) {
+    let result = await roleService.all()
+    ctx.body = result
+  },
+
   // 添加角色
   async addRole(ctx) {
     const { roleCode, roleName } = ctx.request.body

@@ -44,12 +44,12 @@ const user = {
   },
 
   // 判断account是否存在
-  async existAccount(account, exceptId) {
-    const sql = `SELECT account FROM user where account = '${account}' AND deleted != 1 ${
+  async searchAccount(account, exceptId) {
+    const sql = `SELECT id FROM user where account = '${account}' AND deleted != 1 ${
       exceptId ? 'AND id != ' + exceptId : ''
     }`
     let result = await query(sql)
-    return Array.isArray(result) && result.length > 0
+    return result
   },
 
   // 查询 start 到 end 范围的符合条件的用户

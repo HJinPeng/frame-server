@@ -13,29 +13,30 @@ import {
   lowerCamelCase2Underline
 } from '../utils/tool.js'
 
-const userField = ['id', 'role_code', 'role_name', 'status']
+const roleField = ['role_code', 'role_name', 'status']
 
 const role = {
   // 查询 start 到 end 范围的符合条件的角色
   async page(condition) {
     const total = await count('role', condition.where)
-    let records = await filterByPage('role', stringifySqlField(userField), condition)
+    let records = await filterByPage('role', stringifySqlField(roleField.concat('id')), condition)
     return {
       total,
       records: underline2LowerCamelCase(records)
     }
   },
 
+  async all() {
+    const sql = `SELECT * FROM role WHERE deleted != 1 AND status = '1'`
+    let result = await query(sql)
+    result = underline2LowerCamelCase(result)
+    return result
+  },
+
   // 新增角色
   async insertRole(data, createInfo) {
     data = lowerCamelCase2Underline({ ...data, ...createInfo })
-    const insertField = [
-      'role_code',
-      'role_name',
-      'create_by',
-      'create_by_name',
-      'create_date_time'
-    ]
+    const insertField = roleField.concat(['create_by', 'create_by_name', 'create_date_time'])
     let result = await insert('role', generateInsertData(insertField, data))
     return result
   },
@@ -49,13 +50,7 @@ const role = {
   // 更新角色
   async updateRole(data, updateInfo) {
     data = lowerCamelCase2Underline({ ...data, ...updateInfo })
-    const updateField = [
-      'role_code',
-      'role_name',
-      'update_by',
-      'update_by_name',
-      'update_date_time'
-    ]
+    const updateField = roleField.concat(['update_by', 'update_by_name', 'update_date_time'])
     let result = await updateById('role', data.id, generateInsertData(updateField, data))
     return result
   },
