@@ -11,7 +11,7 @@
  Target Server Version : 50743 (5.7.43)
  File Encoding         : 65001
 
- Date: 02/11/2023 08:52:57
+ Date: 02/11/2023 22:40:41
 */
 
 SET NAMES utf8mb4;
@@ -67,7 +67,7 @@ CREATE TABLE `dict_item` (
   `update_date_time` datetime DEFAULT NULL COMMENT '更新时间',
   `deleted` tinyint(4) DEFAULT '0' COMMENT '1删除 0正常',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of dict_item
@@ -103,9 +103,9 @@ CREATE TABLE `menu` (
   `icon` varchar(128) DEFAULT NULL,
   `layout` varchar(64) DEFAULT NULL COMMENT '前端布局',
   `ranking` int(11) DEFAULT NULL,
-  `hidden_menu` tinyint(4) DEFAULT '0' COMMENT '1—隐藏 0—显示',
-  `keep_alive` tinyint(4) DEFAULT '0' COMMENT '1—缓存 0—不缓存',
-  `external_link` tinyint(4) DEFAULT '0' COMMENT '1—外链 0 —非外链',
+  `hidden_menu` varchar(16) DEFAULT '0' COMMENT '1—隐藏 0—显示',
+  `keep_alive` varchar(16) DEFAULT '0' COMMENT '1—缓存 0—不缓存',
+  `external_link` varchar(16) DEFAULT NULL COMMENT '1—外链 0 —非外链',
   `external_link_content` text,
   `status` varchar(16) DEFAULT '1' COMMENT '1—启用 2—禁用',
   `parent_id` int(11) DEFAULT NULL,
@@ -117,23 +117,25 @@ CREATE TABLE `menu` (
   `create_date_time` datetime DEFAULT NULL,
   `update_date_time` datetime DEFAULT NULL,
   `comment` text,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of menu
 -- ----------------------------
 BEGIN;
 INSERT INTO `menu` (`id`, `permission_type`, `permission_name`, `menu_code`, `permission_code`, `permission_level`, `icon`, `layout`, `ranking`, `hidden_menu`, `keep_alive`, `external_link`, `external_link_content`, `status`, `parent_id`, `deleted`, `create_by`, `create_by_name`, `update_by`, `update_by_name`, `create_date_time`, `update_date_time`, `comment`) VALUES (1, 'menu', '系统管理', NULL, NULL, NULL, 'setting', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `menu` (`id`, `permission_type`, `permission_name`, `menu_code`, `permission_code`, `permission_level`, `icon`, `layout`, `ranking`, `hidden_menu`, `keep_alive`, `external_link`, `external_link_content`, `status`, `parent_id`, `deleted`, `create_by`, `create_by_name`, `update_by`, `update_by_name`, `create_date_time`, `update_date_time`, `comment`) VALUES (2, 'menu', '菜单管理', 'MenuManagement', NULL, NULL, 'menu', 'LayoutHeaderSidebar', NULL, NULL, NULL, NULL, NULL, '1', 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `menu` (`id`, `permission_type`, `permission_name`, `menu_code`, `permission_code`, `permission_level`, `icon`, `layout`, `ranking`, `hidden_menu`, `keep_alive`, `external_link`, `external_link_content`, `status`, `parent_id`, `deleted`, `create_by`, `create_by_name`, `update_by`, `update_by_name`, `create_date_time`, `update_date_time`, `comment`) VALUES (3, 'menu', '用户管理', 'UserManagement', NULL, NULL, 'user', 'LayoutHeaderSidebar', 10, NULL, NULL, NULL, NULL, '1', 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `menu` (`id`, `permission_type`, `permission_name`, `menu_code`, `permission_code`, `permission_level`, `icon`, `layout`, `ranking`, `hidden_menu`, `keep_alive`, `external_link`, `external_link_content`, `status`, `parent_id`, `deleted`, `create_by`, `create_by_name`, `update_by`, `update_by_name`, `create_date_time`, `update_date_time`, `comment`) VALUES (4, 'menu', '角色管理', 'RoleManagement', NULL, NULL, 'crown', 'LayoutHeaderSidebar', 7, NULL, NULL, NULL, NULL, '1', 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `menu` (`id`, `permission_type`, `permission_name`, `menu_code`, `permission_code`, `permission_level`, `icon`, `layout`, `ranking`, `hidden_menu`, `keep_alive`, `external_link`, `external_link_content`, `status`, `parent_id`, `deleted`, `create_by`, `create_by_name`, `update_by`, `update_by_name`, `create_date_time`, `update_date_time`, `comment`) VALUES (2, 'menu', '菜单管理', 'MenuManagement', NULL, NULL, 'menu', 'LayoutHeaderSidebar', 1, '0', '0', '0', NULL, '1', 1, 0, NULL, NULL, 'admin', '管理员', NULL, '2023-11-02 22:00:54', NULL);
+INSERT INTO `menu` (`id`, `permission_type`, `permission_name`, `menu_code`, `permission_code`, `permission_level`, `icon`, `layout`, `ranking`, `hidden_menu`, `keep_alive`, `external_link`, `external_link_content`, `status`, `parent_id`, `deleted`, `create_by`, `create_by_name`, `update_by`, `update_by_name`, `create_date_time`, `update_date_time`, `comment`) VALUES (3, 'menu', '用户管理', 'UserManagement', NULL, NULL, 'user', 'LayoutHeaderSidebar', 10, '0', '0', '0', NULL, '1', 1, 0, NULL, NULL, 'admin', '管理员', NULL, '2023-11-02 22:01:51', NULL);
+INSERT INTO `menu` (`id`, `permission_type`, `permission_name`, `menu_code`, `permission_code`, `permission_level`, `icon`, `layout`, `ranking`, `hidden_menu`, `keep_alive`, `external_link`, `external_link_content`, `status`, `parent_id`, `deleted`, `create_by`, `create_by_name`, `update_by`, `update_by_name`, `create_date_time`, `update_date_time`, `comment`) VALUES (4, 'menu', '角色管理', 'RoleManagement', NULL, NULL, 'crown', 'LayoutHeaderSidebar', 5, '0', '0', '0', NULL, '1', 1, 0, NULL, NULL, 'admin', '管理员', NULL, '2023-11-02 21:59:35', NULL);
 INSERT INTO `menu` (`id`, `permission_type`, `permission_name`, `menu_code`, `permission_code`, `permission_level`, `icon`, `layout`, `ranking`, `hidden_menu`, `keep_alive`, `external_link`, `external_link_content`, `status`, `parent_id`, `deleted`, `create_by`, `create_by_name`, `update_by`, `update_by_name`, `create_date_time`, `update_date_time`, `comment`) VALUES (5, 'menu', '角色管理666', 'RoleManagement666', NULL, NULL, 'crown', 'LayoutHeaderSidebar', 7, NULL, NULL, NULL, NULL, '1', 1, 1, NULL, NULL, 'admin', '管理员', NULL, '2023-11-01 21:15:12', NULL);
-INSERT INTO `menu` (`id`, `permission_type`, `permission_name`, `menu_code`, `permission_code`, `permission_level`, `icon`, `layout`, `ranking`, `hidden_menu`, `keep_alive`, `external_link`, `external_link_content`, `status`, `parent_id`, `deleted`, `create_by`, `create_by_name`, `update_by`, `update_by_name`, `create_date_time`, `update_date_time`, `comment`) VALUES (6, 'menu', '菜单测试111234', 'sys', NULL, NULL, NULL, 'LayoutSimple', -1, 0, 0, 1, 'asdsddsf', '2', NULL, 0, NULL, NULL, 'admin', '管理员', NULL, '2023-11-02 08:24:33', NULL);
-INSERT INTO `menu` (`id`, `permission_type`, `permission_name`, `menu_code`, `permission_code`, `permission_level`, `icon`, `layout`, `ranking`, `hidden_menu`, `keep_alive`, `external_link`, `external_link_content`, `status`, `parent_id`, `deleted`, `create_by`, `create_by_name`, `update_by`, `update_by_name`, `create_date_time`, `update_date_time`, `comment`) VALUES (9, 'menu', 'dfgdf', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, '1', 4, 1, NULL, NULL, 'admin', '管理员', NULL, '2023-11-02 08:40:06', NULL);
-INSERT INTO `menu` (`id`, `permission_type`, `permission_name`, `menu_code`, `permission_code`, `permission_level`, `icon`, `layout`, `ranking`, `hidden_menu`, `keep_alive`, `external_link`, `external_link_content`, `status`, `parent_id`, `deleted`, `create_by`, `create_by_name`, `update_by`, `update_by_name`, `create_date_time`, `update_date_time`, `comment`) VALUES (10, 'menu', 'sdf', 'sdf', NULL, NULL, NULL, 'LayoutHeader', NULL, 0, 0, 0, NULL, '1', 4, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `menu` (`id`, `permission_type`, `permission_name`, `menu_code`, `permission_code`, `permission_level`, `icon`, `layout`, `ranking`, `hidden_menu`, `keep_alive`, `external_link`, `external_link_content`, `status`, `parent_id`, `deleted`, `create_by`, `create_by_name`, `update_by`, `update_by_name`, `create_date_time`, `update_date_time`, `comment`) VALUES (11, 'menu', 'sdf', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, '1', 6, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `menu` (`id`, `permission_type`, `permission_name`, `menu_code`, `permission_code`, `permission_level`, `icon`, `layout`, `ranking`, `hidden_menu`, `keep_alive`, `external_link`, `external_link_content`, `status`, `parent_id`, `deleted`, `create_by`, `create_by_name`, `update_by`, `update_by_name`, `create_date_time`, `update_date_time`, `comment`) VALUES (12, 'btn', 'sdf', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, '1', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `menu` (`id`, `permission_type`, `permission_name`, `menu_code`, `permission_code`, `permission_level`, `icon`, `layout`, `ranking`, `hidden_menu`, `keep_alive`, `external_link`, `external_link_content`, `status`, `parent_id`, `deleted`, `create_by`, `create_by_name`, `update_by`, `update_by_name`, `create_date_time`, `update_date_time`, `comment`) VALUES (6, 'menu', '菜单测试111234', 'sys', NULL, NULL, NULL, 'LayoutSimple', -1, '0', '1', '1', 'asdsddsf', '1', NULL, 0, NULL, NULL, 'admin', '管理员', NULL, '2023-11-02 21:15:35', NULL);
+INSERT INTO `menu` (`id`, `permission_type`, `permission_name`, `menu_code`, `permission_code`, `permission_level`, `icon`, `layout`, `ranking`, `hidden_menu`, `keep_alive`, `external_link`, `external_link_content`, `status`, `parent_id`, `deleted`, `create_by`, `create_by_name`, `update_by`, `update_by_name`, `create_date_time`, `update_date_time`, `comment`) VALUES (9, 'menu', 'dfgdf', NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', '0', NULL, '1', 4, 1, NULL, NULL, 'admin', '管理员', NULL, '2023-11-02 08:40:06', NULL);
+INSERT INTO `menu` (`id`, `permission_type`, `permission_name`, `menu_code`, `permission_code`, `permission_level`, `icon`, `layout`, `ranking`, `hidden_menu`, `keep_alive`, `external_link`, `external_link_content`, `status`, `parent_id`, `deleted`, `create_by`, `create_by_name`, `update_by`, `update_by_name`, `create_date_time`, `update_date_time`, `comment`) VALUES (10, 'menu', 'sdf', 'sdf', NULL, NULL, NULL, 'LayoutHeader', NULL, '0', '0', '0', NULL, '1', 4, 1, NULL, NULL, 'admin', '管理员', NULL, '2023-11-02 11:29:01', NULL);
+INSERT INTO `menu` (`id`, `permission_type`, `permission_name`, `menu_code`, `permission_code`, `permission_level`, `icon`, `layout`, `ranking`, `hidden_menu`, `keep_alive`, `external_link`, `external_link_content`, `status`, `parent_id`, `deleted`, `create_by`, `create_by_name`, `update_by`, `update_by_name`, `create_date_time`, `update_date_time`, `comment`) VALUES (11, 'btn', 'sdf', NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', '0', NULL, '1', 6, 0, NULL, NULL, 'admin', '管理员', NULL, '2023-11-02 20:52:38', NULL);
+INSERT INTO `menu` (`id`, `permission_type`, `permission_name`, `menu_code`, `permission_code`, `permission_level`, `icon`, `layout`, `ranking`, `hidden_menu`, `keep_alive`, `external_link`, `external_link_content`, `status`, `parent_id`, `deleted`, `create_by`, `create_by_name`, `update_by`, `update_by_name`, `create_date_time`, `update_date_time`, `comment`) VALUES (12, 'btn', 'sdf', NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', '0', NULL, '1', NULL, 1, NULL, NULL, 'admin', '管理员', NULL, '2023-11-02 11:29:12', NULL);
+INSERT INTO `menu` (`id`, `permission_type`, `permission_name`, `menu_code`, `permission_code`, `permission_level`, `icon`, `layout`, `ranking`, `hidden_menu`, `keep_alive`, `external_link`, `external_link_content`, `status`, `parent_id`, `deleted`, `create_by`, `create_by_name`, `update_by`, `update_by_name`, `create_date_time`, `update_date_time`, `comment`) VALUES (13, 'btn', 'dsf', NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', '0', NULL, '1', 11, 1, NULL, NULL, 'admin', '管理员', NULL, '2023-11-02 11:29:31', NULL);
+INSERT INTO `menu` (`id`, `permission_type`, `permission_name`, `menu_code`, `permission_code`, `permission_level`, `icon`, `layout`, `ranking`, `hidden_menu`, `keep_alive`, `external_link`, `external_link_content`, `status`, `parent_id`, `deleted`, `create_by`, `create_by_name`, `update_by`, `update_by_name`, `create_date_time`, `update_date_time`, `comment`) VALUES (14, 'menu', '字典管理', 'DictManagement', NULL, NULL, 'book', 'LayoutHeaderSidebar', 15, '0', '0', '0', NULL, '1', 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 COMMIT;
 
 -- ----------------------------
@@ -153,13 +155,47 @@ CREATE TABLE `role` (
   `update_date_time` datetime DEFAULT NULL COMMENT '更新时间',
   `deleted` tinyint(4) DEFAULT '0' COMMENT '1删除 0正常',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of role
 -- ----------------------------
 BEGIN;
 INSERT INTO `role` (`id`, `role_code`, `role_name`, `status`, `create_by`, `create_by_name`, `create_date_time`, `update_by`, `update_by_name`, `update_date_time`, `deleted`) VALUES (2, 'admin', '管理员', '1', 'admin', '管理员', '2023-10-26 00:10:46', NULL, NULL, NULL, 0);
+INSERT INTO `role` (`id`, `role_code`, `role_name`, `status`, `create_by`, `create_by_name`, `create_date_time`, `update_by`, `update_by_name`, `update_date_time`, `deleted`) VALUES (3, 'test1', '测试角色1', '1', 'admin', '管理员', '2023-11-02 14:14:43', NULL, NULL, NULL, 0);
+INSERT INTO `role` (`id`, `role_code`, `role_name`, `status`, `create_by`, `create_by_name`, `create_date_time`, `update_by`, `update_by_name`, `update_date_time`, `deleted`) VALUES (4, 'test2', '测试角色2', '2', 'admin', '管理员', '2023-11-02 14:15:21', 'admin', '管理员', '2023-11-02 14:18:56', 0);
+COMMIT;
+
+-- ----------------------------
+-- Table structure for role_menu
+-- ----------------------------
+DROP TABLE IF EXISTS `role_menu`;
+CREATE TABLE `role_menu` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_id` int(11) NOT NULL COMMENT '角色id',
+  `menu_id` int(11) NOT NULL COMMENT '菜单id',
+  `create_by` varchar(32) DEFAULT NULL,
+  `create_by_name` varchar(32) DEFAULT NULL,
+  `create_date_time` datetime DEFAULT NULL,
+  `update_by` varchar(32) DEFAULT NULL,
+  `update_by_name` varchar(32) DEFAULT NULL,
+  `update_date_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of role_menu
+-- ----------------------------
+BEGIN;
+INSERT INTO `role_menu` (`id`, `role_id`, `menu_id`, `create_by`, `create_by_name`, `create_date_time`, `update_by`, `update_by_name`, `update_date_time`) VALUES (8, 2, 2, 'admin', '管理员', '2023-11-02 22:02:42', NULL, NULL, NULL);
+INSERT INTO `role_menu` (`id`, `role_id`, `menu_id`, `create_by`, `create_by_name`, `create_date_time`, `update_by`, `update_by_name`, `update_date_time`) VALUES (9, 2, 4, 'admin', '管理员', '2023-11-02 22:02:42', NULL, NULL, NULL);
+INSERT INTO `role_menu` (`id`, `role_id`, `menu_id`, `create_by`, `create_by_name`, `create_date_time`, `update_by`, `update_by_name`, `update_date_time`) VALUES (10, 2, 14, 'admin', '管理员', '2023-11-02 22:02:42', NULL, NULL, NULL);
+INSERT INTO `role_menu` (`id`, `role_id`, `menu_id`, `create_by`, `create_by_name`, `create_date_time`, `update_by`, `update_by_name`, `update_date_time`) VALUES (11, 2, 3, 'admin', '管理员', '2023-11-02 22:02:42', NULL, NULL, NULL);
+INSERT INTO `role_menu` (`id`, `role_id`, `menu_id`, `create_by`, `create_by_name`, `create_date_time`, `update_by`, `update_by_name`, `update_date_time`) VALUES (12, 2, 1, 'admin', '管理员', '2023-11-02 22:02:42', NULL, NULL, NULL);
+INSERT INTO `role_menu` (`id`, `role_id`, `menu_id`, `create_by`, `create_by_name`, `create_date_time`, `update_by`, `update_by_name`, `update_date_time`) VALUES (13, 3, 1, 'admin', '管理员', '2023-11-02 22:02:59', NULL, NULL, NULL);
+INSERT INTO `role_menu` (`id`, `role_id`, `menu_id`, `create_by`, `create_by_name`, `create_date_time`, `update_by`, `update_by_name`, `update_date_time`) VALUES (14, 3, 2, 'admin', '管理员', '2023-11-02 22:02:59', NULL, NULL, NULL);
+INSERT INTO `role_menu` (`id`, `role_id`, `menu_id`, `create_by`, `create_by_name`, `create_date_time`, `update_by`, `update_by_name`, `update_date_time`) VALUES (15, 4, 11, 'admin', '管理员', '2023-11-02 22:34:27', NULL, NULL, NULL);
+INSERT INTO `role_menu` (`id`, `role_id`, `menu_id`, `create_by`, `create_by_name`, `create_date_time`, `update_by`, `update_by_name`, `update_date_time`) VALUES (16, 4, 6, 'admin', '管理员', '2023-11-02 22:34:27', NULL, NULL, NULL);
 COMMIT;
 
 -- ----------------------------
@@ -174,7 +210,7 @@ CREATE TABLE `user` (
   `email` varchar(64) DEFAULT NULL COMMENT '邮箱',
   `phone` varchar(64) DEFAULT NULL COMMENT '手机号',
   `profile_photo` text COMMENT '头像',
-  `sex` tinyint(4) DEFAULT '0' COMMENT '性别(0-默认未知,1-男,2-女)',
+  `sex` varchar(16) DEFAULT '0' COMMENT '性别(0-默认未知,1-男,2-女)',
   `status` varchar(16) DEFAULT '1' COMMENT '用户状态(1-正常,2-冻结)',
   `deleted` tinyint(4) DEFAULT '0' COMMENT '逻辑删除(0-正常,1-删除)',
   `create_by` varchar(32) DEFAULT NULL,
@@ -184,14 +220,40 @@ CREATE TABLE `user` (
   `update_by_name` varchar(32) DEFAULT NULL,
   `update_date_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
 BEGIN;
-INSERT INTO `user` (`id`, `account`, `password`, `realname`, `email`, `phone`, `profile_photo`, `sex`, `status`, `deleted`, `create_by`, `create_by_name`, `create_date_time`, `update_by`, `update_by_name`, `update_date_time`) VALUES (9, 'jinpengh', '$2b$10$Q76aO4uQ171YWHmiVtsdgOy1ZIkr1dcj/CP1kco1McH6o8m9zStH.', '三年磨一剑', NULL, NULL, NULL, 0, '1', 1, 'admin', '系统管理员', '2023-10-25 22:01:20', 'admin', '管理员', '2023-10-25 22:07:10');
-INSERT INTO `user` (`id`, `account`, `password`, `realname`, `email`, `phone`, `profile_photo`, `sex`, `status`, `deleted`, `create_by`, `create_by_name`, `create_date_time`, `update_by`, `update_by_name`, `update_date_time`) VALUES (10, 'admin', '$2b$10$.uqfCcObKd2wwl5EU5bEkun.1U2aVYOQB81sAdTRFdcwMjQtkAJIK', '管理员', NULL, NULL, NULL, 0, '1', 0, 'jinpengh', '三年磨一剑', '2023-10-25 22:02:32', NULL, NULL, NULL);
+INSERT INTO `user` (`id`, `account`, `password`, `realname`, `email`, `phone`, `profile_photo`, `sex`, `status`, `deleted`, `create_by`, `create_by_name`, `create_date_time`, `update_by`, `update_by_name`, `update_date_time`) VALUES (9, 'jinpengh', '$2b$10$Q76aO4uQ171YWHmiVtsdgOy1ZIkr1dcj/CP1kco1McH6o8m9zStH.', '三年磨一剑', NULL, NULL, NULL, '0', '1', 1, 'admin', '系统管理员', '2023-10-25 22:01:20', 'admin', '管理员', '2023-10-25 22:07:10');
+INSERT INTO `user` (`id`, `account`, `password`, `realname`, `email`, `phone`, `profile_photo`, `sex`, `status`, `deleted`, `create_by`, `create_by_name`, `create_date_time`, `update_by`, `update_by_name`, `update_date_time`) VALUES (10, 'admin', '$2b$10$.uqfCcObKd2wwl5EU5bEkun.1U2aVYOQB81sAdTRFdcwMjQtkAJIK', '管理员', NULL, NULL, NULL, '0', '1', 0, 'jinpengh', '三年磨一剑', '2023-10-25 22:02:32', 'test1', '测试用户1', '2023-11-02 17:56:34');
+INSERT INTO `user` (`id`, `account`, `password`, `realname`, `email`, `phone`, `profile_photo`, `sex`, `status`, `deleted`, `create_by`, `create_by_name`, `create_date_time`, `update_by`, `update_by_name`, `update_date_time`) VALUES (20, 'test1', '$2b$10$H6bXkryT40Nx18fJcex99.8SLBFu8DKxshUp7TjA86JwbS9a8492S', '测试用户12', NULL, NULL, NULL, '0', '1', 0, 'admin', '管理员', '2023-11-02 15:38:29', 'test1', '测试用户1', '2023-11-02 17:59:07');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for user_role
+-- ----------------------------
+DROP TABLE IF EXISTS `user_role`;
+CREATE TABLE `user_role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL COMMENT '用户id',
+  `role_id` int(11) NOT NULL COMMENT '角色id',
+  `create_by` varchar(32) DEFAULT NULL,
+  `create_by_name` varchar(32) DEFAULT NULL,
+  `create_date_time` datetime DEFAULT NULL,
+  `update_by` varchar(32) DEFAULT NULL,
+  `update_by_name` varchar(32) DEFAULT NULL,
+  `update_date_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of user_role
+-- ----------------------------
+BEGIN;
+INSERT INTO `user_role` (`id`, `user_id`, `role_id`, `create_by`, `create_by_name`, `create_date_time`, `update_by`, `update_by_name`, `update_date_time`) VALUES (12, 10, 2, 'test1', '测试用户1', '2023-11-02 17:56:34', NULL, NULL, NULL);
+INSERT INTO `user_role` (`id`, `user_id`, `role_id`, `create_by`, `create_by_name`, `create_date_time`, `update_by`, `update_by_name`, `update_date_time`) VALUES (14, 20, 3, 'test1', '测试用户1', '2023-11-02 17:59:07', NULL, NULL, NULL);
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
