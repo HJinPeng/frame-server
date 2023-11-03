@@ -6,7 +6,7 @@
 export function assembleMenu(menus) {
   const menuMap = {}
   const parentMap = {}
-  const rootMenu = []
+  let rootMenu = []
   menus.forEach((menu) => {
     menuMap[menu.id] = menu
     const parentId = menu.parentId
@@ -19,6 +19,7 @@ export function assembleMenu(menus) {
       rootMenu.push(menu)
     }
   })
+  rootMenu = rootMenu.sort((a, b) => a.ranking - b.ranking)
   function generateMenu(menuArr) {
     return menuArr.map((menu) => {
       if (parentMap[menu.id]?.length) {
