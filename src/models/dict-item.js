@@ -49,6 +49,13 @@ const dictItem = {
     return result
   },
 
+  // 根据字典id,删除字典条目表中关联的所有条目
+  async deleteDictItemByDictId(dictId, updateInfo) {
+    const sql = `UPDATE dict_item SET deleted = 1, update_by = '${updateInfo.updateBy}', update_by_name = '${updateInfo.updateByName}', update_date_time = '${updateInfo.updateDateTime}' WHERE dict_id = ${dictId}`
+    let result = await query(sql)
+    return result
+  },
+
   // 更新字典条目
   async updateDictItem(data, updateInfo) {
     data = lowerCamelCase2Underline({ ...data, ...updateInfo })

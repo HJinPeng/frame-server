@@ -42,7 +42,6 @@ const dict = {
 
   // 删除字典
   async deleteOneDict(id, updateInfo) {
-    // TODO: 使用事务，删除子项，再删除字典
     let result = await logicDeleteById('dict', id, updateInfo)
     return result
   },

@@ -21,8 +21,14 @@ const userRole = {
     return [deleteResult, addResult]
   },
 
+  // 根据用户id删除关联数据
   async deleteByUserId(userId) {
     let result = await userRoleModel.deleteByUserId(userId)
+    return result
+  },
+
+  async deleteByRoleId(roleId) {
+    let result = await userRoleModel.deleteByRoleId(roleId)
     return result
   },
 

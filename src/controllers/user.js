@@ -81,7 +81,6 @@ const user = {
     const id = ctx.params.id
     const updateInfo = ctx.state.updateInfo
     let result = await userService.deleteUserById(id, updateInfo)
-    // TODO: 删除用户-角色表
     ctx.body = result
   },
 

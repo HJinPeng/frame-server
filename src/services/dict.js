@@ -1,4 +1,5 @@
 import dictModel from '../models/dict.js'
+import dictItemService from '../services/dict-item.js'
 import { generatePageCondition, standardizePageData } from '../utils/tool.js'
 
 const dict = {
@@ -28,6 +29,8 @@ const dict = {
 
   // 通过id删除字典
   async deleteDictById(id, updateInfo) {
+    // 删除字典关联的字典条目
+    await dictItemService.deleteDictItemByDictId(id, updateInfo)
     await dictModel.deleteOneDict(id, updateInfo)
     return '删除成功'
   },

@@ -22,6 +22,7 @@ const roleMenu = {
     return [deleteResult, addResult]
   },
 
+  // 根据角色id删除关联数据
   async deleteByRoleId(roleId) {
     let result = await roleMenuModel.deleteByRoleId(roleId)
     return result

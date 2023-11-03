@@ -1,4 +1,5 @@
 import userModel from '../models/user.js'
+import userRoleService from '../models/user-role.js'
 import { generatePageCondition, standardizePageData } from '../utils/tool.js'
 
 const user = {
@@ -46,6 +47,7 @@ const user = {
 
   // 通过id删除用户
   async deleteUserById(id, updateInfo) {
+    await userRoleService.deleteByUserId(id)
     await userModel.deleteOneUser(id, updateInfo)
     return '删除成功'
   },

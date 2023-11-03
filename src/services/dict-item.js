@@ -33,6 +33,12 @@ const dictItem = {
     return '删除成功'
   },
 
+  // 根据字典id删除对应的条目
+  async deleteDictItemByDictId(dictId, updateInfo) {
+    await dictItemModel.deleteDictItemByDictId(dictId, updateInfo)
+    return '删除成功'
+  },
+
   // 更新字典条目
   async updateDictItem(data, updateInfo) {
     await dictItemModel.updateDictItem(data, updateInfo)

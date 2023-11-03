@@ -1,4 +1,6 @@
 import roleModel from '../models/role.js'
+import userRoleService from '../services/user-role.js'
+import roleMenuService from '../services/role-menu.js'
 import { generatePageCondition, standardizePageData } from '../utils/tool.js'
 
 const role = {
@@ -33,6 +35,11 @@ const role = {
 
   // 通过id删除角色
   async deleteRoleById(id, updateInfo) {
+    // 根据角色id删除 用户-角色关联表中的数据
+    await userRoleService.deleteByRoleId(id)
+    // 根据角色id删除 角色-菜单关联表中的数据
+    await roleMenuService.deleteByRoleId(id)
+    // 删除角色
     await roleModel.deleteOneRole(id, updateInfo)
     return '删除成功'
   },

@@ -20,6 +20,11 @@ const userRole = {
     let result = await query(sql)
     return result
   },
+  async deleteByRoleId(roleId) {
+    const sql = `DELETE FROM user_role WHERE role_id = ${roleId}`
+    let result = await query(sql)
+    return result
+  },
   async getRolesByUserId(userId) {
     const sql = `SELECT * FROM user_role WHERE user_id = ${userId}`
     let result = await query(sql)

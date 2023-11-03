@@ -39,8 +39,6 @@ const role = {
     const id = ctx.params.id
     const updateInfo = ctx.state.updateInfo
     let result = await roleService.deleteRoleById(id, updateInfo)
-    // TODO: 删除用户-角色表对应的角色id
-    // TODO: 删除角色-菜单表对应的角色id
     ctx.body = result
   },
 
