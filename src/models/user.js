@@ -95,6 +95,7 @@ const user = {
       'phone',
       'profile_photo',
       'sex',
+      'status',
       'update_by',
       'update_by_name',
       'update_date_time'
