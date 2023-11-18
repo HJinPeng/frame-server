@@ -54,7 +54,13 @@ const menu = {
   async updateMenu(data, updateInfo) {
     data = lowerCamelCase2Underline({ ...data, ...updateInfo })
     const updateField = menuField.concat(['update_by', 'update_by_name', 'update_date_time'])
-    let result = await updateById('menu', data.id, generateInsertData(updateField, data))
+    let result = await updateById(
+      'menu',
+      data.id,
+      generateInsertData(updateField, data, {
+        extraValues: [`parent_id=${data.parent_id || 'NULL'}`]
+      })
+    )
     return result
   },
 

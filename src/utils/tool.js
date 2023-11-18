@@ -83,8 +83,8 @@ export function standardizePageData({ pageNo, pageSize, records, total }) {
  * @param {Object} info {[field]: value}
  * @returns {String}
  */
-export function generateInsertData(fileds, info) {
-  const values = []
+export function generateInsertData(fileds, info, options = { extraValues: [] }) {
+  let values = []
   fileds.forEach((field) => {
     if (info[field] !== undefined) {
       if (info[field] === null) {
@@ -94,6 +94,9 @@ export function generateInsertData(fileds, info) {
       }
     }
   })
+  if (options.extraValues && options.extraValues.length !== 0) {
+    values = values.concat(options.extraValues)
+  }
   return values.join(',')
 }
 
